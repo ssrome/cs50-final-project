@@ -1,10 +1,10 @@
-# PROJECT TITLE
+# ToDo App
 
 #### Video Demo: <URL HERE>
 
 #### Description:
 
-TODO
+A Python app with Flask
 
 ### Run development server
 
