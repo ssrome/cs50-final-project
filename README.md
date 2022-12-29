@@ -9,13 +9,19 @@ A Python app with Flask
 ### Run development server
 
 ```bash
-FLASK_APP=src/app flask run
+FLASK_APP=app flask run
 ```
 
-### Run tests
+### Run tests with UnitTest
 
 ```bash
 nose2 -v
+```
+
+### Run tests with PyTest
+
+```bash
+pytest
 ```
 
 ### Update requirements file
