@@ -9,31 +9,25 @@ A Python app with Flask
 ### Run development server
 
 ```bash
-FLASK_APP=app flask run
+make run-dev
 ```
 
-### Run tests with UnitTest
+### Run tests
 
 ```bash
-nose2 -v
-```
-
-### Run tests with PyTest
-
-```bash
-pytest
+make test
 ```
 
 ### Update requirements file
 
 ```bash
-pip freeze > requirements.txt
+make update
 ```
 
 ### Install packages listed on requirements file
 
 ```bash
-pip install -r requirements.txt
+make install
 ```
 
 ### Test coverage
