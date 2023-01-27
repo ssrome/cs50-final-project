@@ -1,8 +1,7 @@
 from app import app
 
-def test_hello():
+def test_index():
     response = app.test_client().get('/')
-    # assertEqual(response.status_code, 200)
     assert response.status_code == 200
-    # assert response.body == "Hello, World!"
-    assert response.data.decode('utf-8') == "Hello, World!"
+    assert b"Hello, World!" in response.data
+    

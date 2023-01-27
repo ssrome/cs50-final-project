@@ -2,6 +2,9 @@ from flask import Flask, redirect, render_template
 
 app = Flask(__name__)
 
+# Ensure templates are auto-reloaded
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+
 @app.route("/")
-def hello():
-    return "Hello, World!"
+def index():
+    return render_template("index.html")
