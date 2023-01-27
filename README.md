@@ -48,3 +48,16 @@ make watch-test-report
 ```bash
 make update-req
 ```
+
+## Docker
+
+### Run in the backgroud
+```
+docker-compose up -d
+```
+
+### Stop it running
+
+```
+docker-compose stop
+```
