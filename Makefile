@@ -13,7 +13,7 @@ run-dev:
 
 .PHONY: run-dev
 
-update-requirements:
+update-req:
 	pip freeze > requirements.txt
 
-.PHONY: update-requirements
+.PHONY: update-req
