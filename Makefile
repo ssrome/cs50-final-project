@@ -17,3 +17,7 @@ update-req:
 	pip freeze > requirements.txt
 
 .PHONY: update-req
+
+watch-test-report:
+	pytest-watch --beforerun "pytest --html=./test-report.html --self-contained-html"
+.PHONY: watch-test-report
