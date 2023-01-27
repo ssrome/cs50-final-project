@@ -6,6 +6,9 @@
             "use": "@vercel/python"
         }
     ],
+    "github": {
+        "enabled": false
+      },
     "routes": [
         {
             "src": "(.*)",
