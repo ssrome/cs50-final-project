@@ -16,3 +16,8 @@ def test_index_submit_button():
     response = app.test_client().get('/')
     assert b"<button" in response.data
     assert b"Add" in response.data
+
+def test_index_event_list():
+    response = app.test_client().get('/')
+    assert b"<ul" in response.data
+    assert b"value=" in response.data
