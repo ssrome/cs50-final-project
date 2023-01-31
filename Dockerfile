@@ -10,6 +10,4 @@ COPY . /app
 
 EXPOSE 5000
 
-# RUN FLASK_APP=app flask run --debugger
-
 CMD ["python" , "app.py" ]
