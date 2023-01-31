@@ -14,7 +14,7 @@ def after_request(response):
 
 @app.route("/")
 def index():
-    eventLists = [{"id": 1, "name": "birthday"}, {"id": 2, "name": "cinema"}, {"id": 3, "name": "sleeping"}]
+    eventLists = [{"id": 1, "name": "Easter Monday"}, {"id": 2, "name": "Eurovision"}, {"id": 3, "name": "Christmas"}]
     return render_template("index.html", eventLists=eventLists)
 
 if __name__ == "__main__": 

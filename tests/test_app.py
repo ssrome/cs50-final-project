@@ -21,3 +21,8 @@ def test_index_event_list():
     response = app.test_client().get('/')
     assert b"<ul" in response.data
     assert b"value=" in response.data
+
+def test_index_footer():
+    response = app.test_client().get('/')
+    assert b"2023" in response.data
+    assert b"Sabrina Samuel" in response.data
