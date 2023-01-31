@@ -9,5 +9,10 @@ def test_index_heading():
 def test_index_text_field():
     response = app.test_client().get('/')
     assert b"<input" in response.data
-    assert b"Event name" in response.data
+    assert b'placeholder="Event name"' in response.data
     assert b"Event name</label>" in response.data
+
+def test_index_submit_button():
+    response = app.test_client().get('/')
+    assert b"<button" in response.data
+    assert b"Add" in response.data
