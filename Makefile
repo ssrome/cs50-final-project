@@ -9,7 +9,7 @@ test:
 .PHONY: test
 
 run-dev:
-	FLASK_APP=app flask run --debugger
+	FLASK_APP=app flask --debug run
 
 .PHONY: run-dev
 
