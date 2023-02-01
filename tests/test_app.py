@@ -24,5 +24,6 @@ def test_index_event_list():
 
 def test_index_footer():
     response = app.test_client().get('/')
+    assert b"Copyright" in response.data
     assert b"2022 - 2023" in response.data
     assert b"Sabrina Samuel" in response.data
