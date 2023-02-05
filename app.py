@@ -27,7 +27,7 @@ def inject_year():
 @app.route("/", methods=["GET", "POST"])
 def index():
     
-    if request.method == "POST":
+    if request.method == "POST" and "submit-event" in request.form:
     #     localStorage.clear()
         previousEvents = json.loads(localStorage.getItem("list")) or []
         
@@ -41,7 +41,10 @@ def index():
             previousEvents.extend([newEvent])
             localStorage.setItem("list", json.dumps(previousEvents))
             events = json.loads(localStorage.getItem("list"))
-            return render_template("index.html", eventLists=previousEvents)      
+            return render_template("index.html", eventLists=previousEvents)
+    elif request.method == "POST" and "delete-all" in request.form:
+        localStorage.clear()
+        return render_template("index.html")
     else:
         events = localStorage.getItem("list")
         if events is None:
