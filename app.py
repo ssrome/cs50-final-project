@@ -1,7 +1,12 @@
-from flask import Flask, redirect, render_template
+from flask import Flask, redirect, render_template, request
 from datetime import date
-# import os                                            
+import uuid
+import json
+from localStoragePy import localStoragePy
+import os
 
+localStorage = localStoragePy("cs50-todo", "json")
+                                          
 app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -19,12 +24,38 @@ def inject_year():
     yearNow = today.strftime("%Y")
     return dict(year="2022 - {}".format(yearNow))
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-    eventLists = [{"id": 1, "name": "Easter Monday"}, {"id": 2, "name": "Eurovision"}, {"id": 3, "name": "Christmas"}]
-    return render_template("index.html", eventLists=eventLists, test="Year goes here")
+    
+    if request.method == "POST":
+    #     localStorage.clear()
+        previousEvents = json.loads(localStorage.getItem("list")) or []
+        
+        id = uuid.uuid4().int
+        newEvent = {"id": id, "name": request.form.get("new-event")}
+        if previousEvents is None or previousEvents == []:
+            localStorage.setItem("list", json.dumps([newEvent]))
+            events = json.loads(localStorage.getItem("list"))
+            return render_template("index.html", eventLists=events)
+        else:
+            previousEvents.extend([newEvent])
+            localStorage.setItem("list", json.dumps(previousEvents))
+            events = json.loads(localStorage.getItem("list"))
+            return render_template("index.html", eventLists=previousEvents)      
+    else:
+        events = localStorage.getItem("list")
+        if events is None:
+            localStorage.setItem("list", '[]')
+            return render_template("index.html")
+        else:
+            events = json.loads(localStorage.getItem("list"))
+            return render_template("index.html", eventLists=events)
+
+@app.route("/error")
+def error():
+    return render_template("error.html")
 
 if __name__ == "__main__": 
-   app.run(debug=False, host='0.0.0.0')
-    # port = int(os.environ.get('PORT', 5000))
-    # app.run(debug=True, host='0.0.0.0', port=port)
+    # app.run(debug=False, host='0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)

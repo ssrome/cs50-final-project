@@ -1,23 +1,28 @@
-{% extends "layout.html" %} 
-
-{% block title %} 
-    Home 
-{% endblock %} 
-
-{% block main %}
-    <h1>Events</h1>
-    <div class="mb-3">
-        <Form>
-            <label for="enter-event-name" class="form-label">Event name</label>
-            <input type="text" class="form-control" id="enter-event-name" placeholder="Event name">
-            <button type="button" class="btn btn-primary">Add</button>
-        </Form>
-    </div>
-    <div class="mb-3">
-        <ul class="list-group">
-            {% for event in eventLists %}
-                <li value={{ event.id }} class="list-group-item">{{ event.name }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+{% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
+%}
+<h1>Events</h1>
+<div class="mb-3">
+  <form method="post">
+    <label for="enter-event-name" class="form-label">Event name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="new-event"
+      name="new-event"
+      placeholder="Event name"
+    />
+    <button type="submit" name="submit-event" class="btn btn-primary">
+      Add
+    </button>
+  </form>
+</div>
+<div class="mb-3">
+  {% if eventLists %}
+  <ul class="list-group">
+    {% for event in eventLists %}
+    <li value="{{event.id}}" class="list-group-item">{{ event.name }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
 {% endblock %}
