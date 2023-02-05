@@ -1,33 +1,46 @@
 {% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
 %}
 <h1>Events</h1>
-<div class="mb-3">
-  <form method="post">
-    <label for="enter-event-name" class="form-label">Event name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="new-event"
-      name="new-event"
-      placeholder="Event name"
-    />
-    <button type="submit" name="submit-event" class="btn btn-primary">
-      Add
-    </button>
-  </form>
+
+<form method="post">
+  <div class="row g-6 align-items-center">
+    <div class="col-auto">
+      <label for="enter-event-name" class="col-form-label">Event name</label>
+    </div>
+    <div class="col-6">
+      <input
+        type="text"
+        class="form-control"
+        id="new-event"
+        name="new-event"
+        placeholder="Event name"
+      />
+    </div>
+    <div class="col-auto">
+      <button type="submit" name="submit-event" class="btn btn-primary">
+        Add
+      </button>
+    </div>
+  </div>
+</form>
+<br />
+{% if eventLists %}
+<div class="row align-items-center">
+  <div class="col-9">
+    <ul class="list-group">
+      {% for event in eventLists %}
+      <li value="{{event.id}}" class="list-group-item">{{ event.name }}</li>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
-<div class="mb-3">
-  {% if eventLists %}
-  <ul class="list-group">
-    {% for event in eventLists %}
-    <li value="{{event.id}}" class="list-group-item">{{ event.name }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
+{% endif %}
+<div class="row">
   <form method="post">
     <button type="submit" name="delete-all" class="btn btn-danger">
       Delete all
     </button>
   </form>
 </div>
+
 {% endblock %}

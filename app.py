@@ -44,6 +44,7 @@ def index():
             return render_template("index.html", eventLists=previousEvents)
     elif request.method == "POST" and "delete-all" in request.form:
         localStorage.clear()
+        localStorage.setItem("list", '[]')
         return render_template("index.html")
     else:
         events = localStorage.getItem("list")
