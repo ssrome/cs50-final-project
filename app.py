@@ -5,7 +5,7 @@ import json
 from localStoragePy import localStoragePy
 # import os
 
-localStorage = localStoragePy("cs50-todo", "json")
+localStorage = localStoragePy("cs50-todo", "text")
                                           
 app = Flask(__name__)
 
