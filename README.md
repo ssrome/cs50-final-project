@@ -9,10 +9,28 @@ A Python app with Flask
 ### Install packages listed on requirements file
 
 ```bash
-make install
+pip install -r requirements.txt
 ```
 
-### Run development server
+If using pip3:
+
+```
+pip3 install -r requirements.txt
+```
+
+### Activate environment
+
+```
+source [name]/bin/activate
+```
+
+### Run inside environment
+
+```
+FLASK_APP=app flask --debug run
+```
+
+### Run development server outside environment
 
 ```bash
 make run-dev
@@ -39,19 +57,33 @@ coverage report src/*.py
 ```
 
 ### To run a report and watch tests
+
 ```bash
 make watch-test-report
 ```
 
-### Update requirements file
+## Update requirements file
 
 ```bash
-make update-req
+pip freeze > requirements.txt
+```
+
+If using pip3:
+
+```
+pip3 freeze > requirements.txt
 ```
 
 ## Docker
 
+## Build
+
+```
+docker-compose up --build todo-dev
+```
+
 ### Run in the backgroud
+
 ```
 docker-compose up -d
 ```
