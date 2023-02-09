@@ -36,6 +36,11 @@ FLASK_APP=app flask --debug run
 make run-dev
 ```
 
+### Run production
+```bash
+make run-prod
+```
+
 ## Testing
 
 ### Run tests
