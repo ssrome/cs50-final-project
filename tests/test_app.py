@@ -31,3 +31,4 @@ def test_index_footer():
 def test_index_delete_all_button():
     response = app.test_client().get('/')
     assert "Delete all" in response.text
+
