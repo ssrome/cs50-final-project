@@ -1,24 +1,33 @@
 from app import app
 
+
 def test_index_heading():
     response = app.test_client().get('/')
     assert response.status_code == 200
-    assert b"Events" in response.data
-    assert b"<h1>" in response.data
-    
+    assert "Events" in response.text
+    assert "<h1>" in response.text
+
+
 def test_index_text_field():
     response = app.test_client().get('/')
-    assert b"<input" in response.data
-    assert b'placeholder="Event name"' in response.data
-    assert b"Event name</label>" in response.data
+    assert "<input" in response.text
+    assert 'placeholder="Event name"' in response.text
+    assert "Event name</label>" in response.text
+
 
 def test_index_submit_button():
     response = app.test_client().get('/')
-    assert b"<button" in response.data
-    assert b"Add" in response.data
+    assert "<button" in response.text
+    assert "Add" in response.text
+
 
 def test_index_footer():
     response = app.test_client().get('/')
-    assert b"Copyright" in response.data
-    assert b"2022 - 2023" in response.data
-    assert b"Sabrina Samuel" in response.data
+    assert "Copyright" in response.text
+    assert "2022 - 2023" in response.text
+    assert "Sabrina Samuel" in response.text
+
+
+def test_index_delete_all_button():
+    response = app.test_client().get('/')
+    assert "Delete all" in response.text
