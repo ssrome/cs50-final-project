@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-import uuid
 import json
 from localStoragePy import localStoragePy
 import os
 from src.inject_year import InjectYear
+from src.event_item import EventItem
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -30,9 +30,9 @@ def inject_copyright_year():
 def index():
     if request.method == "POST" and "submit-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
+        event_name = request.form.get("new-event")
+        new_event = EventItem(event_name).create_new_event()
 
-        event_id = uuid.uuid4().int
-        new_event = {"id": event_id, "name": request.form.get("new-event")}
         if previous_events is None or previous_events == []:
             localStorage.setItem("list", json.dumps([new_event]))
             events = json.loads(localStorage.getItem("list"))
