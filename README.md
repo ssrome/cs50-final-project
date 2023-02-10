@@ -1,3 +1,5 @@
+[![CI/CD](https://github.com/ssrome/cs50-final-project/actions/workflows/workflow.yaml/badge.svg?branch=main)](https://github.com/ssrome/cs50-final-project/actions/workflows/workflow.yaml)
+
 # ToDo App
 
 #### Video Demo: <URL HERE>
