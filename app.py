@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
-from datetime import date
 import uuid
 import json
 from localStoragePy import localStoragePy
 import os
+from src.inject_year import InjectYear
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -21,10 +21,9 @@ def after_request(response):
 
 
 @app.context_processor
-def inject_year():
-    today = date.today()
-    year_now = today.strftime("%Y")
-    return dict(year="2022 - {}".format(year_now))
+def inject_copyright_year():
+    copyright_year = InjectYear().inject_year()
+    return dict(year=copyright_year)
 
 
 @app.route("/", methods=["GET", "POST"])
