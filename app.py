@@ -30,7 +30,7 @@ def inject_copyright_year():
 def index():
     if request.method == "POST" and "submit-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
-        
+
         event_id = uuid.uuid4().int
         new_event = {"id": event_id, "name": request.form.get("new-event")}
         if previous_events is None or previous_events == []:
