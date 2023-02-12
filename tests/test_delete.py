@@ -17,15 +17,13 @@ def test_delete_returns_a_list(delete):
     assert type(response) == list
 
 
-def test_delete_returns_one_less_in_list(delete):
-    event_list = ["one", "two", "three"]
+def test_delete_doesnt_return_item_to_delete(delete):
+    event_list = [{"id": 1}, {"id": 2}, {"id": 3}]
     event_list_len = len(event_list)
-    response = delete.delete_item(event_list)
-
+    response = delete.delete_item(event_list, 1)
     assert len(response) == event_list_len - 1
+    assert {"id": 2} not in response
 
-
-# def test_delete_doesnt_return_item_to_delete(delete):
 
 def test_delete_all_returns_empty_list(delete):
     event_list = [{"id": 1}, {"id": 2}]
