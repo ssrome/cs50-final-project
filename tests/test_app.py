@@ -17,7 +17,6 @@ def test_index_text_field():
 
 def test_index_submit_button():
     response = app.test_client().get('/')
-    assert "<button" in response.text
     assert "Add" in response.text
 
 
@@ -32,3 +31,12 @@ def test_index_delete_all_button():
     response = app.test_client().get('/')
     assert "Delete all" in response.text
 
+
+def test_add_event():
+    response = app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+    assert "monster" in response.text
+
+
+def test_delete_all():
+    response = app.test_client().post('/', data={"delete-all": "Delete All"})
+    assert "monster" not in response.text

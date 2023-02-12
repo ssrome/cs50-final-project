@@ -28,7 +28,8 @@ def inject_copyright_year():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == "POST" and "submit-event" in request.form:
+    print(request.form)
+    if request.method == "POST" and "add-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
         event_name = request.form.get("new-event")
         new_event = EventItem(event_name).create_new_event()
@@ -36,6 +37,7 @@ def index():
         if previous_events is None or previous_events == []:
             localStorage.setItem("list", json.dumps([new_event]))
             events = json.loads(localStorage.getItem("list"))
+
             return render_template("index.html", eventLists=events)
         else:
             previous_events.extend([new_event])

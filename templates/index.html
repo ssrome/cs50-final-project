@@ -2,7 +2,7 @@
 %}
 <h1>Events</h1>
 
-<form method="post">
+<form method="POST">
   <div class="row g-6 align-items-center">
     <div class="col-auto">
       <label for="new-event" class="col-form-label">Event name</label>
@@ -17,9 +17,10 @@
       />
     </div>
     <div class="col-auto">
-      <button type="submit" name="submit-event" class="btn btn-primary">
+      <Button type="submit" name="add-event" class="btn btn-primary" >
         Add
-      </button>
+        </Button>
+
     </div>
   </div>
 </form>
@@ -29,17 +30,17 @@
   <div class="col-9">
     <ul class="list-group">
       {% for event in eventLists %}
-      <li value="{{event.id}}" class="list-group-item">{{ event.name }}</li>
+      <li class="list-group-item">{{ event.name }}</li>
       {% endfor %}
     </ul>
   </div>
 </div>
 {% endif %}
 <div class="row">
-  <form method="post">
-    <button type="submit" name="delete-all" class="btn btn-danger">
-      Delete all
-    </button>
+  <form method="POST">
+    <Button type="submit" name="delete-all"  class="btn btn-danger">
+    Delete all
+    </Button>
   </form>
 </div>
 
