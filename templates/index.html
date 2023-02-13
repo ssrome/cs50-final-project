@@ -25,12 +25,25 @@
   </div>
 </form>
 <br />
+
 {% if eventLists %}
+
 <div class="row align-items-center">
   <div class="col-9">
     <ul class="list-group">
       {% for event in eventLists %}
-      <li class="list-group-item">{{ event.name }}</li>
+      <li class="list-group-item">
+          <ul>
+              <li>{{ event.name }}</li>
+              <li>
+                  <form method="POST">
+                      <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
+                      Delete
+                      </Button>
+                  </form>
+              </li>
+          </ul>
+          </li>
       {% endfor %}
     </ul>
   </div>
@@ -38,7 +51,7 @@
 {% endif %}
 <div class="row">
   <form method="POST">
-    <Button type="submit" name="delete-all"  class="btn btn-danger">
+    <Button type="submit" name="delete-all" class="btn btn-danger">
     Delete all
     </Button>
   </form>

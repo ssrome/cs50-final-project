@@ -4,6 +4,7 @@ from localStoragePy import localStoragePy
 import os
 from src.inject_year import InjectYear
 from src.event_item import EventItem
+from src.delete import Delete
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -47,6 +48,12 @@ def index():
         localStorage.clear()
         localStorage.setItem("list", '[]')
         return render_template("index.html")
+    elif request.method == "POST" and "delete-event" in request.form:
+        events = json.loads(localStorage.getItem("list"))
+        event_index = int(request.form.get("delete-event"))
+        updated_events = Delete.delete_item(events, event_index)
+        localStorage.setItem("list", json.dumps(updated_events))
+        return render_template("index.html", eventLists=updated_events)
     else:
         events = localStorage.getItem("list")
         if events is None:

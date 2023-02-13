@@ -8,12 +8,12 @@ def delete():
 
 
 def test_delete_is_not_none(delete):
-    response = delete.delete_item([])
+    response = delete.delete_item([], 0)
     assert response is not None
 
 
 def test_delete_returns_a_list(delete):
-    response = delete.delete_item([])
+    response = delete.delete_item([], 0)
     assert type(response) == list
 
 
@@ -23,6 +23,14 @@ def test_delete_doesnt_return_item_to_delete(delete):
     response = delete.delete_item(event_list, 1)
     assert len(response) == event_list_len - 1
     assert {"id": 2} not in response
+
+
+def test_delete_doesnt_return_item_that_was_initially_first(delete):
+    event_list = [{"id": 1}, {"id": 2}, {"id": 3}]
+    event_list_len = len(event_list)
+    response = delete.delete_item(event_list, 0)
+    assert len(response) == event_list_len - 1
+    assert {"id": 1} not in response
 
 
 def test_delete_all_returns_empty_list(delete):
