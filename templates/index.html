@@ -29,20 +29,25 @@
 {% if eventLists %}
 
 <div class="row align-items-center">
-  <div class="col-9">
+  <div class="col-12">
     <ul class="list-group">
       {% for event in eventLists %}
       <li class="list-group-item">
-          <ul>
-              <li>{{ event.name }}</li>
-              <li>
-                  <form method="POST">
-                      <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
+          <form method="POST">
+              <div class="row">
+                <div class="col-9">
+                    <input class="form-control" type="text" value="{{ event.name }}" aria-label="readonly input example" readonly>
+                </div>
+                <div class="col-3">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
                       Delete
                       </Button>
-                  </form>
-              </li>
-          </ul>
+                    </div>
+                </div>
+              </div>
+          </form>
+
           </li>
       {% endfor %}
     </ul>

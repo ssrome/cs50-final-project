@@ -1,5 +1,3 @@
-import pytest
-
 from app import app
 
 
@@ -63,6 +61,3 @@ def test_delete_first_item_in_event_list():
     response = app.test_client().get('/')
     assert "pose" not in response.text
     app.test_client().post('/', data={"delete-all": "Delete All"})
-
-
-
