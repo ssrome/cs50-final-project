@@ -10,4 +10,4 @@ class Delete:
     @staticmethod
     def delete_all(event_list):
         event_list.clear()
-        return event_list
+        return []

@@ -4,6 +4,7 @@ from localStoragePy import localStoragePy
 import os
 from src.inject_year import InjectYear
 from src.event_item import EventItem
+from src.delete import Delete
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -28,7 +29,6 @@ def inject_copyright_year():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    print(request.form)
     if request.method == "POST" and "add-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
         event_name = request.form.get("new-event")
@@ -44,8 +44,8 @@ def index():
             localStorage.setItem("list", json.dumps(previous_events))
             return render_template("index.html", eventLists=previous_events)
     elif request.method == "POST" and "delete-all" in request.form:
-        localStorage.clear()
-        localStorage.setItem("list", '[]')
+        cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
+        localStorage.setItem("list", cleared_list)
         return render_template("index.html")
     else:
         events = localStorage.getItem("list")
