@@ -6,7 +6,7 @@ from src.inject_year import InjectYear
 
 @pytest.fixture
 def inject_year():
-    return InjectYear().inject_year()
+    return InjectYear.inject_year()
 
 
 def test_year_is_not_none(inject_year):
