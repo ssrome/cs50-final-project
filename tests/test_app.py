@@ -1,3 +1,5 @@
+import pytest
+
 from app import app
 
 
@@ -33,10 +35,34 @@ def test_index_delete_all_button():
 
 
 def test_add_event():
-    response = app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+    response = app.test_client().get('/')
     assert "monster" in response.text
 
 
 def test_delete_all():
-    response = app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all": "Delete All"})
+    response = app.test_client().get('/')
     assert "monster" not in response.text
+
+
+def test_delete_item():
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "butterflies"})
+    app.test_client().post('/', data={"delete-event": "1"})
+    response = app.test_client().get('/')
+    assert "butterflies" not in response.text
+    app.test_client().post('/', data={"delete-all": "Delete All"})
+
+
+def test_delete_first_item_in_event_list():
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "pose"})
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "butterflies"})
+    app.test_client().post('/', data={"delete-event": "0"})
+    response = app.test_client().get('/')
+    assert "pose" not in response.text
+    app.test_client().post('/', data={"delete-all": "Delete All"})
+
+
+
