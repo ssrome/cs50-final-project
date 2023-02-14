@@ -23,7 +23,7 @@ def after_request(response):
 
 @app.context_processor
 def inject_copyright_year():
-    copyright_year = InjectYear().inject_year()
+    copyright_year = InjectYear()()
     return dict(year=copyright_year)
 
 
