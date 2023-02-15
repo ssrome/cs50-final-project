@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
 import os
-from src.inject_year import InjectYear
+from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
 from src.delete import Delete
 
@@ -23,8 +23,8 @@ def after_request(response):
 
 @app.context_processor
 def inject_copyright_year():
-    copyright_year = InjectYear()()
-    return dict(year=copyright_year)
+    current_year = GetCurrentYear()
+    return dict(year=f'2022 - {current_year}')
 
 
 @app.route("/", methods=["GET", "POST"])

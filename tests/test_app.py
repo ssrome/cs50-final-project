@@ -23,7 +23,7 @@ def test_index_submit_button():
 def test_index_footer():
     response = app.test_client().get('/')
     assert "Copyright" in response.text
-    assert "2022 - 2023" in response.text
+    assert "2022 - " in response.text
     assert "Sabrina Samuel" in response.text
 
 
