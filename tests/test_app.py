@@ -67,10 +67,16 @@ def test_shows_complete_button():
     app.test_client().post('/', data={"add-event": "Add", "new-event": "pose"})
     response = app.test_client().get('/')
     assert "complete" in response.text
+    app.test_client().post('/', data={"delete-all": "Delete All"})
 
 
 # def test_can_mark_an_item_complete():
 #     app.test_client().post('/', data={"add-event": "Add", "new-event": "pose"})
 #     app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
 #     app.test_client().post('/', data={"complete-event": "0"})
-#     assert "pose"
+#     response = app.test_client().get('/')
+#     assert 'aria-label="readonly input" readonly' in response.text
+
+
+
+
