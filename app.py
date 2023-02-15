@@ -23,7 +23,7 @@ def after_request(response):
 
 @app.context_processor
 def inject_copyright_year():
-    current_year = GetCurrentYear()
+    current_year = GetCurrentYear().__call__()
     return dict(year=f'2022 - {current_year}')
 
 

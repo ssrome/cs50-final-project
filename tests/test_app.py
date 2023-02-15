@@ -23,7 +23,7 @@ def test_index_submit_button():
 def test_index_footer():
     response = app.test_client().get('/')
     assert "Copyright" in response.text
-    assert "2022 - " in response.text
+    assert "2022 - 20" in response.text
     assert "Sabrina Samuel" in response.text
 
 
@@ -61,3 +61,16 @@ def test_delete_first_item_in_event_list():
     response = app.test_client().get('/')
     assert "pose" not in response.text
     app.test_client().post('/', data={"delete-all": "Delete All"})
+
+
+def test_shows_complete_button():
+    app.test_client().post('/', data={"add-event": "Add", "new-event": "pose"})
+    response = app.test_client().get('/')
+    assert "complete" in response.text
+
+
+# def test_can_mark_an_item_complete():
+#     app.test_client().post('/', data={"add-event": "Add", "new-event": "pose"})
+#     app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+#     app.test_client().post('/', data={"complete-event": "0"})
+#     assert "pose"
