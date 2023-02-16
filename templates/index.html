@@ -35,7 +35,7 @@
       <li class="list-group-item">
           <form method="POST">
               <div class="row">
-                  {% if event.complete == True %}
+                  {% if event.is_complete == True %}
                 <div class="col-9">
                     <input class="form-control" type="text" value="{{ event.name }}" aria-label="readonly input" readonly>
                 </div>

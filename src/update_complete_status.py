@@ -5,8 +5,8 @@ class UpdateCompleteStatus:
             return item_list
 
         if button_event == "complete-event":
-            item_list[index]["complete"] = True
+            item_list[index]["is_complete"] = True
             return item_list
 
-        item_list[index]["complete"] = False
+        item_list[index]["is_complete"] = False
         return item_list

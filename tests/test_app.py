@@ -90,3 +90,9 @@ def test_can_mark_a_complete_item_incomplete():
     assert 'aria-label="input"' in response.text
     assert 'Complete' in response.text
     app.test_client().post('/', data={"delete-all": "Delete All"})
+
+
+# def test_it_doesnt_create_item_if_input_is_empty():
+#     app.test_client().post('/', data={"add-event": "Add", "new-event": ""})
+#     response = app.test_client().get('/')
+#     assert "" not in response.text
