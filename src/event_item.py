@@ -7,7 +7,8 @@ class EventItem:
         event_id = uuid.uuid4().int
         self.id = event_id
         self.name = event_name
+        self.complete = False
 
     def create_new_event(self):
-        event = {"id": self.id, "name": self.name}
+        event = {"id": self.id, "name": self.name, "complete": self.complete}
         return event

@@ -2,9 +2,12 @@ from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
 import os
+
+from src.events import Events
 from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
 from src.delete import Delete
+from src.mark_item_complete import MarkItemComplete
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -29,6 +32,8 @@ def inject_copyright_year():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    method = request.method
+    form = request.form
     if request.method == "POST" and "add-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
         event_name = request.form.get("new-event")
@@ -51,6 +56,12 @@ def index():
         events = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get("delete-event"))
         updated_events = Delete.delete_item(events, event_index)
+        localStorage.setItem("list", json.dumps(updated_events))
+        return render_template("index.html", eventLists=updated_events)
+    elif request.method == "POST" and "complete-event" in request.form:
+        events = json.loads(localStorage.getItem("list"))
+        event_index = int(request.form.get("complete-event"))
+        updated_events = Events(MarkItemComplete())(events, event_index, method, form)
         localStorage.setItem("list", json.dumps(updated_events))
         return render_template("index.html", eventLists=updated_events)
     else:

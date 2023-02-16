@@ -35,19 +35,36 @@
       <li class="list-group-item">
           <form method="POST">
               <div class="row">
+                  {% if event.complete == True %}
                 <div class="col-9">
-                    <input class="form-control" type="text" value="{{ event.name }}" >
+                    <input class="form-control" type="text" value="{{ event.name }}" aria-label="readonly input" readonly>
                 </div>
                 <div class="col-3">
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <Button type="submit" name="complete-event" value="{{ loop.index0 }}" class="btn btn-success" >
-                        Complete
+                        Undo Complete
                         </Button>
                         <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
                         Delete
                         </Button>
                     </div>
                 </div>
+                  {% else %}
+                      <div class="col-9">
+                          <input class="form-control" type="text" value="{{ event.name }}" aria-label="input">
+                      </div>
+                      <div class="col-3">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <Button type="submit" name="complete-event" value="{{ loop.index0 }}" class="btn btn-success" >
+                            Complete
+                            </Button>
+                            <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
+                            Delete
+                            </Button>
+                        </div>
+                      </div>
+
+                  {%  endif %}
               </div>
           </form>
 
