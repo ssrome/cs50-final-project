@@ -78,3 +78,14 @@ def test_can_mark_an_item_complete():
     assert 'Undo Complete' in response.text
     assert 'aria-label="readonly input" readonly' in response.text
     app.test_client().post('/', data={"delete-all": "Delete All"})
+
+
+# def test_can_mark_a_complete_item_incomplete():
+#     app.test_client().post('/', data={"add-event": "Add", "new-event": "monster"})
+#     app.test_client().post('/', data={"complete-event": "0"})
+#     response = app.test_client().get('/')
+#     assert 'Undo Complete' in response.text
+#     app.test_client().post('/', data={"incomplete-event": "0"})
+#     response = app.test_client().get('/')
+#     assert 'Undo Complete' not in response.text
+#     assert 'Complete' in response.text

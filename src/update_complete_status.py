@@ -1,4 +1,4 @@
-class MarkItemComplete:
+class UpdateCompleteStatus:
 
     def __call__(self, event_list, index=""):
         if type(index) != int:

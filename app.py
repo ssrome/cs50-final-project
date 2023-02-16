@@ -7,7 +7,7 @@ from src.events import Events
 from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
 from src.delete import Delete
-from src.mark_item_complete import MarkItemComplete
+from src.update_complete_status import UpdateCompleteStatus
 
 localStorage = localStoragePy("cs50-todo", "text")
                                           
@@ -61,7 +61,7 @@ def index():
     elif request.method == "POST" and "complete-event" in request.form:
         events = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get("complete-event"))
-        updated_events = Events(MarkItemComplete())(events, event_index, method, form)
+        updated_events = Events(UpdateCompleteStatus())(events, event_index, method, form)
         localStorage.setItem("list", json.dumps(updated_events))
         return render_template("index.html", eventLists=updated_events)
     else:
