@@ -92,7 +92,12 @@ def test_can_mark_a_complete_item_incomplete():
     app.test_client().post('/', data={"delete-all": "Delete All"})
 
 
-# def test_it_doesnt_create_item_if_input_is_empty():
-#     app.test_client().post('/', data={"add-event": "Add", "new-event": ""})
-#     response = app.test_client().get('/')
-#     assert "" not in response.text
+def test_it_doesnt_create_item_if_input_is_empty():
+    app.test_client().post('/', data={"add-event": "Add", "new-event": ""})
+    response = app.test_client().get('/')
+    assert '<value="0">' not in response.text
+
+
+def test_it_shows_an_error_message_if_input_is_empty_on_add():
+    response = app.test_client().post('/', data={"add-event": "Add", "new-event": ""})
+    assert "Please enter text in event name." in response.text

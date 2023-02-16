@@ -14,14 +14,20 @@
         id="new-event"
         name="new-event"
         placeholder="Event name"
+{#        required#}
       />
     </div>
+
     <div class="col-auto">
       <Button type="submit" name="add-event" class="btn btn-primary" >
         Add
         </Button>
-
     </div>
+      {% if error == True  %}
+          <div class="col-6 fw-bold text-danger">
+            Please enter text in event name.
+          </div>
+      {% endif %}
   </div>
 </form>
 <br />

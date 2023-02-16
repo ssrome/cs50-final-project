@@ -3,6 +3,7 @@ import json
 from localStoragePy import localStoragePy
 import os
 
+from src.check_created_event import CheckCreatedEvent
 from src.events import Events
 from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
@@ -42,19 +43,22 @@ def index():
         button_event = None
 
     if request.method == "POST" and "add-event" in request.form:
-        previous_events = json.loads(localStorage.getItem("list")) or []
         event_name = request.form.get("new-event")
-        new_event = EventItem(event_name).create_new_event()
+        checked_event = CheckCreatedEvent.check_created_event(event_name)
+        previous_events = json.loads(localStorage.getItem("list")) or []
+        if checked_event is True:
+            new_event = EventItem(event_name).create_new_event()
 
-        if previous_events is None or previous_events == []:
-            localStorage.setItem("list", json.dumps([new_event]))
-            events = json.loads(localStorage.getItem("list"))
+            if previous_events is None or previous_events == []:
+                localStorage.setItem("list", json.dumps([new_event]))
+                events = json.loads(localStorage.getItem("list"))
 
-            return render_template("index.html", eventLists=events)
-        else:
-            previous_events.extend([new_event])
-            localStorage.setItem("list", json.dumps(previous_events))
-            return render_template("index.html", eventLists=previous_events)
+                return render_template("index.html", eventLists=events)
+            else:
+                previous_events.extend([new_event])
+                localStorage.setItem("list", json.dumps(previous_events))
+                return render_template("index.html", eventLists=previous_events)
+        return render_template("index.html", eventLists=previous_events, error=True)
     elif request.method == "POST" and "delete-all" in request.form:
         cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
         localStorage.setItem("list", cleared_list)
