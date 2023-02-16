@@ -34,6 +34,13 @@ def inject_copyright_year():
 def index():
     method = request.method
     form = request.form
+    button_event = list(form.to_dict().keys())
+
+    if len(button_event) == 1:
+        button_event = button_event.pop()
+    else:
+        button_event = None
+
     if request.method == "POST" and "add-event" in request.form:
         previous_events = json.loads(localStorage.getItem("list")) or []
         event_name = request.form.get("new-event")
@@ -58,9 +65,9 @@ def index():
         updated_events = Delete.delete_item(events, event_index)
         localStorage.setItem("list", json.dumps(updated_events))
         return render_template("index.html", eventLists=updated_events)
-    elif request.method == "POST" and "complete-event" in request.form:
+    elif request.method == "POST" and button_event in request.form:
         events = json.loads(localStorage.getItem("list"))
-        event_index = int(request.form.get("complete-event"))
+        event_index = int(request.form.get(button_event))
         updated_events = Events(UpdateCompleteStatus())(events, event_index, method, form)
         localStorage.setItem("list", json.dumps(updated_events))
         return render_template("index.html", eventLists=updated_events)
