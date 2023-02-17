@@ -86,6 +86,12 @@ def index():
             return render_template("index.html", item_list=events)
 
 
+@app.route("/completed")
+def completed():
+    items = json.loads(localStorage.getItem("list"))
+    return render_template("completed.html", item_list=items)
+
+
 @app.route("/error")
 def error():
     return render_template("error.html")

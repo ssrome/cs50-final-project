@@ -1,0 +1,62 @@
+{% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
+%}
+<h1>Completed</h1>
+
+{% if item_list %}
+
+<div class="row align-items-center">
+  <div class="col-12">
+    <ul class="list-group">
+      {% for item in item_list %}
+      <li class="list-group-item">
+          <form method="POST">
+              <div class="row">
+                  {% if item.is_complete == True %}
+                <div class="col-9">
+                    <input class="form-control" type="text" value="{{ item.name }}" aria-label="readonly input" readonly>
+                </div>
+                <div class="col-3">
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <Button type="submit" name="incomplete-event" value="{{ loop.index0 }}" class="btn btn-outline-success" >
+                        Incomplete
+                        </Button>
+                        <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
+                        Delete
+                        </Button>
+                    </div>
+                </div>
+                  {% else %}
+                      <div class="col-9">
+                          <input class="form-control" type="text" value="{{ item.name }}" aria-label="input">
+                      </div>
+                      <div class="col-3">
+                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                            <Button type="submit" name="complete-event" value="{{ loop.index0 }}" class="btn btn-success" >
+                            Complete
+                            </Button>
+                            <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
+                            Delete
+                            </Button>
+                        </div>
+                      </div>
+
+                  {%  endif %}
+              </div>
+          </form>
+
+          </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+    <div class="row">
+        <form method="POST">
+            <Button type="submit" name="delete-all-event" class="btn btn-danger">
+            Delete all
+            </Button>
+      </form>
+    </div>
+{% endif %}
+
+
+{% endblock %}

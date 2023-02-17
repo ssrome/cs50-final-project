@@ -102,3 +102,21 @@ def test_it_doesnt_create_item_if_input_is_empty():
 def test_it_shows_an_error_message_if_input_is_empty_on_add():
     response = app.test_client().post('/', data={"add-event": "Add", "new-item": ""})
     assert "Please enter text in name." in response.text
+
+
+def test_it_shows_completed_page():
+    response = app.test_client().get('/completed')
+    assert "Completed" in response.text
+
+
+# def test_it_shows_page_with_completed_items():
+#     app.test_client().post('/', data={"add-event": "Add", "new-item": "celebrate"})
+#     app.test_client().post('/', data={"add-event": "Add", "new-item": "monster"})
+#     app.test_client().post('/', data={"add-event": "Add", "new-item": "pose"})
+#     app.test_client().post('/', data={"complete-event": "0"})
+#     app.test_client().post('/', data={"complete-event": "1"})
+#     response = app.test_client().get('/completed')
+#     assert "celebrate" in response.text
+#     assert "monster" in response.text
+    # assert "pose" not in response.text
+
