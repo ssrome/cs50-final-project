@@ -28,6 +28,7 @@ def test_index_footer():
 
 
 def test_index_delete_all_button():
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "monster"})
     response = app.test_client().get('/')
     assert "Delete all" in response.text
 
@@ -39,7 +40,7 @@ def test_add_event():
 
 
 def test_delete_all():
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
     response = app.test_client().get('/')
     assert "monster" not in response.text
 
@@ -50,7 +51,7 @@ def test_delete_item():
     app.test_client().post('/', data={"delete-event": "1"})
     response = app.test_client().get('/')
     assert "butterflies" not in response.text
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_delete_first_item_in_event_list():
@@ -60,14 +61,14 @@ def test_delete_first_item_in_event_list():
     app.test_client().post('/', data={"delete-event": "0"})
     response = app.test_client().get('/')
     assert "pose" not in response.text
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_shows_complete_button():
     app.test_client().post('/', data={"add-event": "Add", "new-item": "pose"})
     response = app.test_client().get('/')
     assert "complete" in response.text
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_can_mark_an_item_complete():
@@ -77,7 +78,7 @@ def test_can_mark_an_item_complete():
     response = app.test_client().get('/')
     assert 'Incomplete' in response.text
     assert 'aria-label="readonly input" readonly' in response.text
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_can_mark_a_complete_item_incomplete():
@@ -89,7 +90,7 @@ def test_can_mark_a_complete_item_incomplete():
     assert 'Incomplete' not in response.text
     assert 'aria-label="input"' in response.text
     assert 'Complete' in response.text
-    app.test_client().post('/', data={"delete-all": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_it_doesnt_create_item_if_input_is_empty():

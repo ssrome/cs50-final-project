@@ -36,10 +36,10 @@ def index():
 
     method = request.method
     form = request.form
-    button_event = list(form.to_dict().keys())
+    button_event_list = list(form.to_dict().keys())
 
-    if len(button_event) == 1:
-        button_event = button_event.pop()
+    if len(button_event_list) == 1:
+        button_event = button_event_list.pop()
     else:
         button_event = None
 
@@ -60,7 +60,7 @@ def index():
                 localStorage.setItem("list", json.dumps(previous_events))
                 return render_template("index.html", item_list=previous_events)
         return render_template("index.html", item_list=previous_events, error=True)
-    elif request.method == "POST" and "delete-all" in request.form:
+    elif request.method == "POST" and "delete-all-event" in request.form:
         cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
         localStorage.setItem("list", cleared_list)
         return render_template("index.html")
