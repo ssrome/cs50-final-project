@@ -89,7 +89,13 @@ def index():
 @app.route("/completed")
 def completed():
     items = json.loads(localStorage.getItem("list"))
-    return render_template("completed.html", item_list=items)
+    filtered_completed_items = []
+
+    for item in items:
+        if item["is_complete"] is True:
+            filtered_completed_items.append(item)
+
+    return render_template("completed.html", item_list=filtered_completed_items)
 
 
 @app.route("/error")
