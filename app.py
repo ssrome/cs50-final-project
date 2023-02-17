@@ -33,6 +33,7 @@ def inject_copyright_year():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+
     method = request.method
     form = request.form
     button_event = list(form.to_dict().keys())
@@ -43,22 +44,22 @@ def index():
         button_event = None
 
     if request.method == "POST" and "add-event" in request.form:
-        event_name = request.form.get("new-event")
-        checked_event = CheckCreatedEvent.check_created_event(event_name)
+        item_name = request.form.get("new-item")
+        checked_event = CheckCreatedEvent.check_created_event(item_name)
         previous_events = json.loads(localStorage.getItem("list")) or []
         if checked_event is True:
-            new_event = EventItem(event_name).create_new_event()
+            new_event = EventItem(item_name).create_new_event()
 
             if previous_events is None or previous_events == []:
                 localStorage.setItem("list", json.dumps([new_event]))
                 events = json.loads(localStorage.getItem("list"))
 
-                return render_template("index.html", eventLists=events)
+                return render_template("index.html", item_list=events)
             else:
                 previous_events.extend([new_event])
                 localStorage.setItem("list", json.dumps(previous_events))
-                return render_template("index.html", eventLists=previous_events)
-        return render_template("index.html", eventLists=previous_events, error=True)
+                return render_template("index.html", item_list=previous_events)
+        return render_template("index.html", item_list=previous_events, error=True)
     elif request.method == "POST" and "delete-all" in request.form:
         cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
         localStorage.setItem("list", cleared_list)
@@ -68,13 +69,13 @@ def index():
         event_index = int(request.form.get("delete-event"))
         updated_events = Delete.delete_item(events, event_index)
         localStorage.setItem("list", json.dumps(updated_events))
-        return render_template("index.html", eventLists=updated_events)
+        return render_template("index.html", item_list=updated_events)
     elif request.method == "POST" and button_event in request.form:
         events = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get(button_event))
         updated_events = Events(UpdateCompleteStatus())(events, event_index, method, form)
         localStorage.setItem("list", json.dumps(updated_events))
-        return render_template("index.html", eventLists=updated_events)
+        return render_template("index.html", item_list=updated_events)
     else:
         events = localStorage.getItem("list")
         if events is None:
@@ -82,7 +83,7 @@ def index():
             return render_template("index.html")
         else:
             events = json.loads(localStorage.getItem("list"))
-            return render_template("index.html", eventLists=events)
+            return render_template("index.html", item_list=events)
 
 
 @app.route("/error")

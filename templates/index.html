@@ -1,20 +1,19 @@
 {% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
 %}
-<h1>Events</h1>
+<h1>Upcoming</h1>
 
 <form method="POST">
   <div class="row g-6 align-items-center">
     <div class="col-auto">
-      <label for="new-event" class="col-form-label">Event name</label>
+      <label for="new-item" class="col-form-label">Name</label>
     </div>
       <div class="col-6">
         <input
         type="text"
         class="form-control"
-        id="new-event"
-        name="new-event"
-        placeholder="Event name"
-{#        required#}
+        id="new-item"
+        name="new-item"
+        placeholder="Name"
       />
     </div>
 
@@ -25,25 +24,25 @@
     </div>
       {% if error == True  %}
           <div class="col-6 fw-bold text-danger">
-            Please enter text in event name.
+            Please enter text in name.
           </div>
       {% endif %}
   </div>
 </form>
 <br />
 
-{% if eventLists %}
+{% if item_list %}
 
 <div class="row align-items-center">
   <div class="col-12">
     <ul class="list-group">
-      {% for event in eventLists %}
+      {% for item in item_list %}
       <li class="list-group-item">
           <form method="POST">
               <div class="row">
-                  {% if event.is_complete == True %}
+                  {% if item.is_complete == True %}
                 <div class="col-9">
-                    <input class="form-control" type="text" value="{{ event.name }}" aria-label="readonly input" readonly>
+                    <input class="form-control" type="text" value="{{ item.name }}" aria-label="readonly input" readonly>
                 </div>
                 <div class="col-3">
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
@@ -57,7 +56,7 @@
                 </div>
                   {% else %}
                       <div class="col-9">
-                          <input class="form-control" type="text" value="{{ event.name }}" aria-label="input">
+                          <input class="form-control" type="text" value="{{ item.name }}" aria-label="input">
                       </div>
                       <div class="col-3">
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
