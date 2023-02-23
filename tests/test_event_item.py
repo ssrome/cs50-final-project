@@ -17,3 +17,5 @@ def test_event_dict():
     new_event_dict = EventItem("test3").create_new_event()
     assert type(new_event_dict["id"]) == int
     assert new_event_dict["name"] == "test3"
+    assert new_event_dict["is_complete"] is False
+    assert new_event_dict["is_edit"] is False

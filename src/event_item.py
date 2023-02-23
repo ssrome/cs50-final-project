@@ -8,7 +8,10 @@ class EventItem:
         self.id = item_id
         self.name = item_name
         self.is_complete = False
+        self.is_edit = False
 
     def create_new_event(self):
-        event = {"id": self.id, "name": self.name, "is_complete": self.is_complete}
+        event = {
+            "id": self.id, "name": self.name, "is_complete": self.is_complete, "is_edit": self.is_edit
+        }
         return event
