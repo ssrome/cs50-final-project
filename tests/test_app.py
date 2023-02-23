@@ -78,6 +78,8 @@ def test_can_mark_an_item_complete():
     response = app.test_client().get('/')
     assert 'Incomplete' in response.text
     assert 'aria-label="readonly input" readonly' in response.text
+    assert 'text-decoration-line-through' in response.text
+    assert 'plaintext' in response.text
     app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
@@ -90,6 +92,8 @@ def test_can_mark_a_complete_item_incomplete():
     assert 'Incomplete' not in response.text
     assert 'aria-label="input"' in response.text
     assert 'Complete' in response.text
+    assert 'text-decoration-line-through' not in response.text
+    assert 'plaintext' not in response.text
     app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
