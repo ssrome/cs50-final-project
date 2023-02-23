@@ -1,8 +1,9 @@
 import pytest
 
 from src.update_complete_status import UpdateCompleteStatus
+from tests.fixtures.item_list_response import ALL_FALSE
 
-ITEM_LIST = [{"id": 1, "is_complete": False}, {"id": 2, "is_complete": False}]
+ITEM_LIST = ALL_FALSE
 
 
 @pytest.fixture
@@ -10,14 +11,11 @@ def update_complete_status():
     return UpdateCompleteStatus()
 
 
-def test_returns_a_list(update_complete_status):
-    response = update_complete_status(ITEM_LIST, "complete-event", 0)
-    assert type(response) == list
-
-
 def test_returns_list_when_no_index_sent(update_complete_status):
     response = update_complete_status(ITEM_LIST, "complete-event")
-    assert '"is_complete": True' not in response
+    assert type(response) == list
+    assert response[0]["is_complete"] is False
+    assert response[1]["is_complete"] is False
 
 
 def test_returns_list_with_one_marked_complete(update_complete_status):

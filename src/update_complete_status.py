@@ -1,7 +1,7 @@
 class UpdateCompleteStatus:
 
-    def __call__(self, item_list, button_event, index=""):
-        if type(index) != int:
+    def __call__(self, item_list, button_event, index=None):
+        if type(index) != int or index is None:
             return item_list
 
         if button_event == "complete-event":
