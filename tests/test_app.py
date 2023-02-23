@@ -90,7 +90,7 @@ def test_can_mark_a_complete_item_incomplete():
     app.test_client().post('/', data={"incomplete-event": "0"})
     response = app.test_client().get('/')
     assert 'Incomplete' not in response.text
-    assert 'aria-label="input"' in response.text
+    assert 'aria-label="readonly input" readonly' in response.text
     assert 'Complete' in response.text
     assert 'text-decoration-line-through' not in response.text
     assert 'plaintext' not in response.text
