@@ -1,49 +1,44 @@
 from unittest.mock import MagicMock
 from src.events import Events
+from tests.fixtures.item_list_response import ALL_FALSE, ONE_COMPLETE_TRUE, ONE_EDIT_TRUE
 import pytest
 
-
-EVENT_LIST = [{"id": 1, "complete": False}, {"id": 2, "complete": False}]
-
-EVENT_LIST_RESPONSE = [{"id": 1, "complete": False}, {"id": 2, "complete": True}]
-
+ITEM_LIST = ALL_FALSE
 
 request = MagicMock()
 request.method = "POST"
-request_form = {"complete-event": "0"}
-
-
-@pytest.fixture()
-def update_complete_status_mock():
-    return MagicMock()
+request_form_with_complete_event = {"complete-event": "0"}
+request_form_with_incomplete_event = {"incomplete-event": "0"}
+request_form_with_edit_event = {"edit-event": "0"}
+request_form_with_save_event = {"save-event": "0"}
 
 
 @pytest.fixture
-def events(update_complete_status_mock):
-    return Events(update_complete_status_mock)
+def events():
+    return Events()
 
 
 def test_return_is_not_none(events):
-    response = events(EVENT_LIST, 1, "POST", request_form)
+    response = events(ITEM_LIST, 0, "POST", request_form_with_complete_event)
     assert response is not None
-
-
-def test_it_calls_mark_items_complete(update_complete_status_mock, events):
-    events(EVENT_LIST, 1, "POST", request_form)
-    update_complete_status_mock.assert_called()
-
-
-def test_it_calls_mark_items_complete_with_events_list(update_complete_status_mock, events):
-    events(EVENT_LIST, 1, "POST", request_form)
-    update_complete_status_mock.assert_called_with(EVENT_LIST, "complete-event", 1)
-
-
-def test_events_returns_a_list(update_complete_status_mock, events):
-    update_complete_status_mock.return_value = EVENT_LIST_RESPONSE
-    response = events(EVENT_LIST, 1, "POST", request_form)
     assert type(response) == list
 
 
-def test_doesnt_call_mark_items_complete_with_post_method_and_edit_event(update_complete_status_mock, events):
-    events(EVENT_LIST, 1, "POST", {"edit-event": "0"})
-    update_complete_status_mock.assert_not_called()
+def test_it_calls_update_complete_status_with_complete_event(events):
+    response = events(ITEM_LIST, 0, "POST", request_form_with_complete_event)
+    assert response[0]["is_complete"] is True
+
+
+def test_it_calls_update_complete_status_with_incomplete_event(events):
+    response = events(ONE_COMPLETE_TRUE, 0, "POST", request_form_with_incomplete_event)
+    assert response[0]["is_complete"] is False
+
+
+def test_it_calls_update_edit_status_with_edit_event(events):
+    response = events(ITEM_LIST, 0, "POST", request_form_with_edit_event)
+    assert response[0]["is_edit"] is True
+
+
+def test_it_calls_update_edit_status_with_save_event(events):
+    response = events(ONE_EDIT_TRUE, 0, "POST", request_form_with_save_event)
+    assert response[0]["is_edit"] is False

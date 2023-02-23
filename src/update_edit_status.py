@@ -1,6 +1,4 @@
 class UpdateEditStatus:
-    # def __init__(self, item_list):
-    #     self.item_list = item_list
 
     @staticmethod
     def __call__(item_list, button_event, index=None):

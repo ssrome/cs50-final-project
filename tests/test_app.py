@@ -34,15 +34,17 @@ def test_index_delete_all_button():
 
 
 def test_add_event():
-    app.test_client().post('/', data={"add-event": "Add", "new-item": "monster"})
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "pose"})
     response = app.test_client().get('/')
-    assert "monster" in response.text
+    assert "pose" in response.text
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_delete_all():
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "butterflies"})
     app.test_client().post('/', data={"delete-all-event": "Delete All"})
     response = app.test_client().get('/')
-    assert "monster" not in response.text
+    assert "butterflies" not in response.text
 
 
 def test_delete_item():
@@ -123,8 +125,20 @@ def test_it_shows_page_with_only_completed_items():
     assert "celebrate" in response.text
     assert "monster" in response.text
     assert "pose" not in response.text
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
 
 
 def test_shows_edit_button():
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "celebrate"})
     response = app.test_client().get('/')
     assert 'Edit' in response.text
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+
+
+def test_input_is_editable_after_pressing_edit_button():
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "celebrate"})
+    app.test_client().post('/', data={"edit-event": "0"})
+    response = app.test_client().get('/')
+    assert 'aria-label="readonly input"' not in response.text
+    assert 'readonly' not in response.text
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
