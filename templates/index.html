@@ -41,32 +41,35 @@
           <form method="POST">
               <div class="row">
                   {% if item.is_complete == True %}
-                <div class="col-9">
+                <div class="col-9 col-sm-6">
                     <input class="form-control-plaintext text-decoration-line-through" type="text" value="{{ item.name }}" aria-label="readonly input" readonly>
                 </div>
-                <div class="col-3">
-                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                <div class="col-3 col-sm-6">
                         <Button type="submit" name="incomplete-event" value="{{ loop.index0 }}" class="btn btn-outline-success" >
-                        Incomplete
+                            Incomplete
+                        </Button>
+                        <Button type="submit" name=edit-event" value="{{ loop.index0 }}" class="btn btn-secondary">
+                            Edit
                         </Button>
                         <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
-                        Delete
+                            Delete
                         </Button>
-                    </div>
                 </div>
                   {% else %}
-                      <div class="col-9">
+                      <div class="col-9 col-sm-6">
                           <input class="form-control" type="text" value="{{ item.name }}" aria-label="readonly input" readonly>
                       </div>
-                      <div class="col-3">
-                        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                      <div class="col-3 col-sm-6">
+
                             <Button type="submit" name="complete-event" value="{{ loop.index0 }}" class="btn btn-success" >
-                            Complete
+                                Complete
+                            </Button>
+                            <Button type="submit" name=edit-event" value="{{ loop.index0 }}" class="btn btn-secondary">
+                                Edit
                             </Button>
                             <Button type="submit" name="delete-event" value="{{ loop.index0 }}" class="btn btn-danger" >
-                            Delete
+                                Delete
                             </Button>
-                        </div>
                       </div>
 
                   {%  endif %}

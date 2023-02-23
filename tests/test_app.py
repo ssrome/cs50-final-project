@@ -123,3 +123,8 @@ def test_it_shows_page_with_only_completed_items():
     assert "celebrate" in response.text
     assert "monster" in response.text
     assert "pose" not in response.text
+
+
+def test_shows_edit_button():
+    response = app.test_client().get('/')
+    assert 'Edit' in response.text
