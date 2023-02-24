@@ -51,9 +51,9 @@ def index():
 
             if previous_events is None or previous_events == []:
                 localStorage.setItem("list", json.dumps([new_event]))
-                events = json.loads(localStorage.getItem("list"))
+                item_list = json.loads(localStorage.getItem("list"))
 
-                return render_template("index.html", item_list=events)
+                return render_template("index.html", item_list=item_list)
             else:
                 previous_events.extend([new_event])
                 localStorage.setItem("list", json.dumps(previous_events))
@@ -64,25 +64,25 @@ def index():
         localStorage.setItem("list", cleared_list)
         return render_template("index.html")
     elif request.method == "POST" and "delete-event" in request.form:
-        events = json.loads(localStorage.getItem("list"))
+        item_list = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get("delete-event"))
-        updated_events = Delete.delete_item(events, event_index)
-        localStorage.setItem("list", json.dumps(updated_events))
-        return render_template("index.html", item_list=updated_events)
+        updated_item_list = Delete.delete_item(item_list, event_index)
+        localStorage.setItem("list", json.dumps(updated_item_list))
+        return render_template("index.html", item_list=updated_item_list)
     elif request.method == "POST" and button_event in request.form:
-        events = json.loads(localStorage.getItem("list"))
+        item_list = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get(button_event))
-        updated_events = Events()(events, event_index, method, form)
-        localStorage.setItem("list", json.dumps(updated_events))
-        return render_template("index.html", item_list=updated_events)
+        updated_item_list = Events()(item_list, event_index, method, form)
+        localStorage.setItem("list", json.dumps(updated_item_list))
+        return render_template("index.html", item_list=updated_item_list)
     else:
-        events = localStorage.getItem("list")
-        if events is None:
+        item_list = localStorage.getItem("list")
+        if item_list is None:
             localStorage.setItem("list", '[]')
             return render_template("index.html")
         else:
-            events = json.loads(localStorage.getItem("list"))
-            return render_template("index.html", item_list=events)
+            item_list = json.loads(localStorage.getItem("list"))
+            return render_template("index.html", item_list=item_list)
 
 
 @app.route("/completed")
