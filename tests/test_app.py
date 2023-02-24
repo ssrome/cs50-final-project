@@ -142,3 +142,12 @@ def test_input_is_editable_after_pressing_edit_button():
     assert 'aria-label="readonly input"' not in response.text
     assert 'readonly' not in response.text
     app.test_client().post('/', data={"delete-all-event": "Delete All"})
+
+
+def test_save_button_not_shown_on_completed_item():
+    app.test_client().post('/', data={"add-event": "Add", "new-item": "celebrate"})
+    app.test_client().post('/', data={"complete-event": "0"})
+    response = app.test_client().post('/', data={"edit-event": "0"})
+    assert 'Edit' in response.text
+    assert 'Save' not in response.text
+    app.test_client().post('/', data={"delete-all-event": "Delete All"})
