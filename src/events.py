@@ -26,4 +26,7 @@ class Events:
             elif "delete-event" in form:
                 response = self.delete.delete_item(item_list, index)
                 return response
+            elif "delete-all-event" in form:
+                response = self.delete.delete_all(item_list)
+                return response
         return item_list

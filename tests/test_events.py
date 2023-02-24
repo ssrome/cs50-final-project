@@ -23,6 +23,7 @@ request_form_with_incomplete_event = {"incomplete-event": "0"}
 request_form_with_edit_event = {"edit-event": "0"}
 request_form_with_save_event = {"save-event": "0"}
 request_form_with_delete_event = {"delete-event": "0"}
+request_form_with_delete_all_event = {"delete-all-event": "Delete all"}
 
 
 @pytest.fixture
@@ -57,5 +58,10 @@ def test_it_calls_update_edit_status_with_save_event(events):
 
 
 def test_it_calls_delete_item(events):
-    response = events(ONE_EDIT_TRUE, 0, "POST", request_form_with_delete_event)
+    response = events(ITEM_LIST, 0, "POST", request_form_with_delete_event)
     assert response[0]["id"] != 1
+
+
+def test_it_calls_delete_all(events):
+    response = events(ITEM_LIST, 0, "POST", request_form_with_delete_all_event)
+    assert response == []
