@@ -1,15 +1,17 @@
 import pytest
 from src.update_edit_status import UpdateEditStatus
-from tests.fixtures.item_list_response import ALL_FALSE, ONE_EDIT_TRUE
+from tests.fixtures.item_list_response import ONE_EDIT_TRUE
 
 ITEM_LIST = [
         {
             "id": 1,
+            "name": "monster",
             "is_complete": False,
             "is_edit": False
         },
         {
             "id": 2,
+            "name": "pose",
             "is_complete": False,
             "is_edit": False
         }
@@ -19,7 +21,6 @@ index = 0
 
 @pytest.fixture()
 def update_edit_status():
-
     return UpdateEditStatus()
 
 
