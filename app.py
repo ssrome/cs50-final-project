@@ -63,12 +63,6 @@ def index():
         cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
         localStorage.setItem("list", cleared_list)
         return render_template("index.html")
-    elif request.method == "POST" and "delete-event" in request.form:
-        item_list = json.loads(localStorage.getItem("list"))
-        event_index = int(request.form.get("delete-event"))
-        updated_item_list = Delete.delete_item(item_list, event_index)
-        localStorage.setItem("list", json.dumps(updated_item_list))
-        return render_template("index.html", item_list=updated_item_list)
     elif request.method == "POST" and button_event in request.form:
         item_list = json.loads(localStorage.getItem("list"))
         event_index = int(request.form.get(button_event))
