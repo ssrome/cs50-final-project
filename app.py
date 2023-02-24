@@ -9,7 +9,7 @@ from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
 from src.delete import Delete
 
-localStorage = localStoragePy("cs50-todo", "text")
+localStorage = localStoragePy("cs50-todo", "json")
                                           
 app = Flask(__name__)
 
