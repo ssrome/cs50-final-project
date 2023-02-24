@@ -36,8 +36,10 @@ def index():
     form = request.form
     button_event_list = list(form.to_dict().keys())
 
-    if len(button_event_list) == 1:
+    if len(button_event_list) == 2:
         button_event = button_event_list.pop()
+    elif len(button_event_list) == 1:
+        button_event = button_event_list[0]
     else:
         button_event = None
 

@@ -6,11 +6,13 @@ import pytest
 ITEM_LIST = [
     {
         "id": 1,
+        "name": "monster",
         "is_complete": False,
         "is_edit": False
     },
     {
         "id": 2,
+        "name": "pose",
         "is_complete": False,
         "is_edit": False
     }
@@ -21,7 +23,7 @@ request.method = "POST"
 request_form_with_complete_event = {"complete-event": "0"}
 request_form_with_incomplete_event = {"incomplete-event": "0"}
 request_form_with_edit_event = {"edit-event": "0"}
-request_form_with_save_event = {"save-event": "0"}
+request_form_with_save_event = {"edit-item": "psycho", "save-event": "0"}
 request_form_with_delete_event = {"delete-event": "0"}
 request_form_with_delete_all_event = {"delete-all-event": "Delete all"}
 
@@ -52,8 +54,9 @@ def test_it_calls_update_edit_status_with_edit_event(events):
     assert response[0]["is_edit"] is True
 
 
-def test_it_calls_update_edit_status_with_save_event(events):
+def test_it_calls_update_item_and_update_edit_status_with_save_event(events):
     response = events(ONE_EDIT_TRUE, "POST", request_form_with_save_event, 0)
+    assert response[0]["name"] == "psycho"
     assert response[0]["is_edit"] is False
 
 

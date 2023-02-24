@@ -57,7 +57,10 @@
                 </div>
                   {% elif item.is_complete == True and item.is_edit == True %}
                       <div class="col-9 col-sm-6">
-                    <input class="form-control-plaintext text-decoration-line-through" type="text" value="{{ item.name }}" aria-label="input">
+                    <input
+                            id="edit-item"
+                            name="edit-item"
+                            class="form-control-plaintext text-decoration-line-through" type="text" value="{{ item.name }}" aria-label="input">
                 </div>
                 <div class="col-3 col-sm-6">
                         <Button type="submit" name="incomplete-event" value="{{ loop.index0 }}" class="btn btn-outline-success" >
@@ -72,7 +75,10 @@
                 </div>
                   {% elif item.is_complete == False and item.is_edit == True %}
                       <div class="col-9 col-sm-6">
-                    <input class="form-control" type="text" value="{{ item.name }}" aria-label="input">
+                    <input
+                            id="edit-item"
+                            name="edit-item"
+                            class="form-control" type="text" value="{{ item.name }}" aria-label="input">
                 </div>
                 <div class="col-3 col-sm-6">
                         <Button type="submit" name="complete-event" value="{{ loop.index0 }}" class="btn btn-success" >
