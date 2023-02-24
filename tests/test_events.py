@@ -38,30 +38,30 @@ def test_return_is_not_none(events):
 
 
 def test_it_calls_update_complete_status_with_complete_event(events):
-    response = events(ITEM_LIST, 0, "POST", request_form_with_complete_event)
+    response = events(ITEM_LIST, "POST", request_form_with_complete_event, 0)
     assert response[0]["is_complete"] is True
 
 
 def test_it_calls_update_complete_status_with_incomplete_event(events):
-    response = events(ONE_COMPLETE_TRUE, 0, "POST", request_form_with_incomplete_event)
+    response = events(ONE_COMPLETE_TRUE, "POST", request_form_with_incomplete_event, 0)
     assert response[0]["is_complete"] is False
 
 
 def test_it_calls_update_edit_status_with_edit_event(events):
-    response = events(ITEM_LIST, 0, "POST", request_form_with_edit_event)
+    response = events(ITEM_LIST, "POST", request_form_with_edit_event, 0)
     assert response[0]["is_edit"] is True
 
 
 def test_it_calls_update_edit_status_with_save_event(events):
-    response = events(ONE_EDIT_TRUE, 0, "POST", request_form_with_save_event)
+    response = events(ONE_EDIT_TRUE, "POST", request_form_with_save_event, 0)
     assert response[0]["is_edit"] is False
 
 
 def test_it_calls_delete_item(events):
-    response = events(ITEM_LIST, 0, "POST", request_form_with_delete_event)
+    response = events(ITEM_LIST, "POST", request_form_with_delete_event, 0)
     assert response[0]["id"] != 1
 
 
 def test_it_calls_delete_all(events):
-    response = events(ITEM_LIST, 0, "POST", request_form_with_delete_all_event)
+    response = events(ITEM_LIST, "POST", request_form_with_delete_all_event, 0)
     assert response == []

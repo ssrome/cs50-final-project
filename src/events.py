@@ -9,7 +9,7 @@ class Events:
         self.update_edit_status = UpdateEditStatus()
         self.delete = Delete()
 
-    def __call__(self, item_list, index, method, form):
+    def __call__(self, item_list, method, form, index=None):
         if method == "POST":
             if "complete-event" in form:
                 response = self.update_complete_status(item_list, "complete-event", index)

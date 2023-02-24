@@ -42,8 +42,8 @@ def index():
     else:
         button_event = None
 
-    if request.method == "POST" and "add-event" in request.form:
-        item_name = request.form.get("new-item")
+    if method == "POST" and "add-event" in form:
+        item_name = form.get("new-item")
         checked_event = CheckCreatedEvent.check_created_event(item_name)
         previous_events = json.loads(localStorage.getItem("list")) or []
         if checked_event is True:
@@ -59,14 +59,14 @@ def index():
                 localStorage.setItem("list", json.dumps(previous_events))
                 return render_template("index.html", item_list=previous_events)
         return render_template("index.html", item_list=previous_events, error=True)
-    elif request.method == "POST" and "delete-all-event" in request.form:
+    elif method == "POST" and "delete-all-event" in form:
         cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
         localStorage.setItem("list", cleared_list)
         return render_template("index.html")
-    elif request.method == "POST" and button_event in request.form:
+    elif method == "POST" and button_event in form:
         item_list = json.loads(localStorage.getItem("list"))
-        event_index = int(request.form.get(button_event))
-        updated_item_list = Events()(item_list, event_index, method, form)
+        event_index = int(form.get(button_event))
+        updated_item_list = Events()(item_list, method, form, event_index)
         localStorage.setItem("list", json.dumps(updated_item_list))
         return render_template("index.html", item_list=updated_item_list)
     else:
