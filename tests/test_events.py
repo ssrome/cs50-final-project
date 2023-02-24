@@ -63,5 +63,5 @@ def test_it_calls_delete_item(events):
 
 
 def test_it_calls_delete_all(events):
-    response = events(ITEM_LIST, "POST", request_form_with_delete_all_event, 0)
+    response = events(ITEM_LIST, "POST", request_form_with_delete_all_event)
     assert response == []

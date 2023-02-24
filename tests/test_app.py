@@ -37,12 +37,12 @@ def test_add_event():
     app.test_client().post('/', data={"add-event": "Add", "new-item": "pose"})
     response = app.test_client().get('/')
     assert "pose" in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_delete_all():
     app.test_client().post('/', data={"add-event": "Add", "new-item": "butterflies"})
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
     response = app.test_client().get('/')
     assert "butterflies" not in response.text
 
@@ -53,7 +53,7 @@ def test_delete_item():
     app.test_client().post('/', data={"delete-event": "1"})
     response = app.test_client().get('/')
     assert "butterflies" not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_delete_first_item_in_event_list():
@@ -63,14 +63,14 @@ def test_delete_first_item_in_event_list():
     app.test_client().post('/', data={"delete-event": "0"})
     response = app.test_client().get('/')
     assert "pose" not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_shows_complete_button():
     app.test_client().post('/', data={"add-event": "Add", "new-item": "pose"})
     response = app.test_client().get('/')
     assert "complete" in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_can_mark_an_item_complete():
@@ -82,7 +82,7 @@ def test_can_mark_an_item_complete():
     assert 'aria-label="readonly input" readonly' in response.text
     assert 'text-decoration-line-through' in response.text
     assert 'plaintext' in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_can_mark_a_complete_item_incomplete():
@@ -96,7 +96,7 @@ def test_can_mark_a_complete_item_incomplete():
     assert 'Complete' in response.text
     assert 'text-decoration-line-through' not in response.text
     assert 'plaintext' not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_it_doesnt_create_item_if_input_is_empty():
@@ -125,14 +125,14 @@ def test_it_shows_page_with_only_completed_items():
     assert "celebrate" in response.text
     assert "monster" in response.text
     assert "pose" not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_shows_edit_button():
     app.test_client().post('/', data={"add-event": "Add", "new-item": "celebrate"})
     response = app.test_client().get('/')
     assert 'Edit' in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_input_is_editable_after_pressing_edit_button():
@@ -141,7 +141,7 @@ def test_input_is_editable_after_pressing_edit_button():
     response = app.test_client().get('/')
     assert 'aria-label="readonly input"' not in response.text
     assert 'readonly' not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_save_button_not_shown_on_completed_item():
@@ -150,4 +150,4 @@ def test_save_button_not_shown_on_completed_item():
     response = app.test_client().post('/', data={"edit-event": "0"})
     assert 'Edit' in response.text
     assert 'Save' not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete All"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})

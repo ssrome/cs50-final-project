@@ -7,7 +7,6 @@ from src.check_created_event import CheckCreatedEvent
 from src.events import Events
 from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
-from src.delete import Delete
 
 localStorage = localStoragePy("cs50-todo", "json")
                                           
@@ -59,14 +58,17 @@ def index():
                 localStorage.setItem("list", json.dumps(previous_events))
                 return render_template("index.html", item_list=previous_events)
         return render_template("index.html", item_list=previous_events, error=True)
-    elif method == "POST" and "delete-all-event" in form:
-        cleared_list = Delete.delete_all([json.loads(localStorage.getItem("list"))])
-        localStorage.setItem("list", cleared_list)
-        return render_template("index.html")
+
     elif method == "POST" and button_event in form:
+        events = Events()
         item_list = json.loads(localStorage.getItem("list"))
-        event_index = int(form.get(button_event))
-        updated_item_list = Events()(item_list, method, form, event_index)
+
+        if button_event == "delete-all-event":
+            updated_item_list = events(item_list, method, form)
+        else:
+            event_index = int(form.get(button_event))
+            updated_item_list = events(item_list, method, form, event_index)
+
         localStorage.setItem("list", json.dumps(updated_item_list))
         return render_template("index.html", item_list=updated_item_list)
     else:
