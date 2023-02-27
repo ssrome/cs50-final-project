@@ -1,6 +1,16 @@
 html, body {
   background-image: url(brick-background-grey.png);
   background-repeat: repeat;
+  font-family: 'Reem Kufi Fun', sans-serif;
+  /*font-family: 'Press Start 2P', cursive;*/
+}
+
+main{
+  font-size: 28px;
+}
+
+h1{
+  font-size: 3.0rem;
 }
 
 .container-fluid{
