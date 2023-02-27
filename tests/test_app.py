@@ -12,7 +12,7 @@ def test_index_text_field():
     response = app.test_client().get('/')
     assert "<input" in response.text
     assert 'placeholder="Name"' in response.text
-    assert "Name</label>" in response.text
+    assert "Add new item</label>" in response.text
 
 
 def test_index_submit_button():
