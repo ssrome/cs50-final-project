@@ -2,11 +2,11 @@ from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
 import os
-
 from src.check_created_event import CheckCreatedEvent
 from src.events import Events
 from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
+
 
 localStorage = localStoragePy("cs50-todo", "json")
                                           
@@ -93,6 +93,11 @@ def completed():
             filtered_completed_items.append(item)
 
     return render_template("completed.html", item_list=filtered_completed_items)
+
+
+@app.route("/add-countdown")
+def add_countdown():
+    return render_template("add-countdown.html")
 
 
 @app.route("/error")

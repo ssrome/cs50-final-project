@@ -1,0 +1,10 @@
+{% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
+%}
+<h1>Add Countdown</h1>
+<form action="/add-countdown">
+    <label for="countdown">Countdown:</label>
+    <input type="date" id="countdown" name="countdown">
+    <input type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+{% endblock %}

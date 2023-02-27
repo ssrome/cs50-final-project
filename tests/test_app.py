@@ -160,3 +160,31 @@ def test_edited_item_can_be_saved():
     assert 'monster' in response.text
     assert 'celebrate' not in response.text
     app.test_client().post('/', data={"delete-all-event": "Delete all"})
+
+
+def test_returns_type_to_add_subtitle():
+    response = app.test_client().get('/')
+    assert "Pick type to add" in response.text
+
+
+def test_returns_type_to_add():
+    response = app.test_client().get('/')
+    assert "Add ToDo" in response.text
+    assert "Add Countdown" in response.text
+
+
+def test_shows_link_to_add_countdown_page():
+    response = app.test_client().get('/')
+    assert 'href="add-countdown"' in response.text
+
+
+def test_shows_page_to_add_countdown():
+    response = app.test_client().get('/add-countdown')
+    assert response.status_code == 200
+    assert "Add Countdown" in response.text
+    assert "<h1>" in response.text
+
+
+def test_returns_date_field():
+    response = app.test_client().get('/add-countdown')
+    assert 'input type="date"' in response.text
