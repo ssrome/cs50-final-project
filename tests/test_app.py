@@ -154,12 +154,12 @@ def test_input_is_editable_after_pressing_edit_button():
 
 
 def test_edited_item_can_be_saved():
-    app.test_client().post('/', data={"new-item": "celebrate", "add-event": "Add"})
+    app.test_client().post('/', data={"new-item": "Celebrate", "add-event": "Add"})
     app.test_client().post('/', data={"edit-event": "0"})
-    response = app.test_client().post('/', data={"edit-item": "monster", "save-event": "0"})
-    assert 'monster' in response.text
-    assert 'celebrate' not in response.text
-    app.test_client().post('/', data={"delete-all-event": "Delete all"})
+    response = app.test_client().post('/', data={"edit-item": "Monster", "save-event": "0"})
+    assert 'Monster' in response.text
+    assert 'Celebrate' not in response.text
+    # app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_returns_type_to_add_subtitle():
@@ -175,7 +175,7 @@ def test_returns_type_to_add():
 
 def test_shows_link_to_add_countdown_page():
     response = app.test_client().get('/')
-    assert 'href="add-countdown"' in response.text
+    assert 'href="/add-countdown"' in response.text
 
 
 def test_shows_page_to_add_countdown():
@@ -185,6 +185,14 @@ def test_shows_page_to_add_countdown():
     assert "<h1>" in response.text
 
 
+def test_shows_countdown_name():
+    response = app.test_client().get('/add-countdown')
+    assert "<input" in response.text
+    assert 'placeholder="Enter Countdown Name"' in response.text
+    assert "Countdown name:</label>" in response.text
+
+
 def test_returns_date_field():
     response = app.test_client().get('/add-countdown')
     assert 'input type="date"' in response.text
+    assert "Date:" in response.text

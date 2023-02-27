@@ -1,10 +1,33 @@
 {% extends "layout.html" %} {% block title %} Home {% endblock %} {% block main
 %}
 <h1>Add Countdown</h1>
-<form action="/add-countdown">
-    <label for="countdown">Countdown:</label>
-    <input type="date" id="countdown" name="countdown">
-    <input type="submit" value="Submit" class="btn btn-primary">
+
+<form method="POST" action="/add-countdown">
+  <div class="row g-6 align-items-center mx-auto">
+      <div class="col-auto"><label for="new-countdown" class="col-form-label">Countdown name:</label></div>
+      <div class="col-5">
+        <input
+        type="text"
+        class="form-control"
+        id="new-countdown"
+        name="new-countdown"
+        placeholder="Enter Countdown Name"
+      />
+    </div>
+      <div class="col-auto">
+          <label for="countdown">Date:</label>
+          <input type="date" id="countdown" name="countdown">
+      </div>
+      <div class="col-auto">
+      <Button type="submit" name="add-countdown-event" class="btn btn-primary" >
+        Add
+        </Button>
+    </div>
+  </div>
 </form>
+
+
+
+
 
 {% endblock %}
