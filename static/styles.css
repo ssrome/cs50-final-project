@@ -1,0 +1,8 @@
+html, body {
+  background-image: url(brick-background-grey.png);
+  background-repeat: repeat;
+}
+
+.container-fluid{
+  width: 95%
+}

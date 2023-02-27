@@ -18,18 +18,18 @@
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     ></script>
 
-    <link href="/static/favicon.ico" rel="icon" />
+{#    <link href="/static/favicon.ico" rel="icon" />#}
 
-    <!-- <link href="/static/styles.css" rel="stylesheet" /> -->
+    <link href="/static/styles.css" rel="stylesheet" />
 
     <title>Project: {% block title %}{% endblock %}</title>
   </head>
 
   <body>
-    <main class="container-fluid py-5 text-center">
+    <main class="container-fluid mt-5 mx-auto py-5 text-center border bg-body">
       {% block main %}{% endblock %}
     </main>
 
-    <footer class="mb-5 small text-end text-muted">Copyright &copy; {{ year }}. Sabrina Samuel. All rights reserved.</footer>
+    <footer class="container-fluid mb-5 small text-end text-muted bg-body">Copyright &copy; {{ year }}. Sabrina Samuel. All rights reserved.</footer>
   </body>
 </html>
