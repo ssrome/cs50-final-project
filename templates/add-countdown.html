@@ -2,6 +2,8 @@
 %}
 <h1>Add Countdown</h1>
 
+    {{ form }}
+
 <form method="POST" action="/add-countdown">
   <div class="row g-6 align-items-center mx-auto">
       <div class="col-auto"><label for="new-countdown" class="col-form-label">Countdown name:</label></div>
@@ -16,7 +18,11 @@
     </div>
       <div class="col-auto">
           <label for="countdown">Date:</label>
-          <input type="date" id="countdown" name="countdown">
+          <input type="date" id="countdown-date" name="countdown-date">
+      </div>
+      <div class="col-auto">
+          <label for="countdown-time">Time:</label>
+          <input type="time" id="countdown-time" name="countdown-time">
       </div>
       <div class="col-auto">
       <Button type="submit" name="add-countdown-event" class="btn btn-primary" >

@@ -196,3 +196,9 @@ def test_returns_date_field():
     response = app.test_client().get('/add-countdown')
     assert 'input type="date"' in response.text
     assert "Date:" in response.text
+
+
+def test_returns_time_field():
+    response = app.test_client().get('/add-countdown')
+    assert 'input type="time"' in response.text
+    assert "Date:" in response.text
