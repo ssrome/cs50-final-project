@@ -18,7 +18,7 @@
       />
     </div>
       <div class="col-auto">
-          <label for="countdown">Date:</label>
+          <label for="countdown-date">Date:</label>
           <input type="date" id="countdown-date" name="countdown-date">
       </div>
       <div class="col-auto">
@@ -33,7 +33,33 @@
   </div>
 </form>
 
+{% if item_list %}
 
+<div class="row align-items-center">
+  <div class="col-12">
+    <ul class="list-group">
+        {% for item in item_list %}
+        <li class="list-group-item">
+            <div class="col-3 col-sm-3">
+                <input
+                    id="edit-item"
+                    name="edit-item"
+                    class="form-control" type="text" value="{{ item.name }}" aria-label="input">
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+</div>
+<div class="row">
+    <form method="POST" action="/add-countdown">
+        <Button type="submit" name="delete-all-event" class="btn btn-danger">
+        Delete all
+        </Button>
+  </form>
+</div>
+
+{% endif %}
 
 
 

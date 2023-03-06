@@ -33,7 +33,7 @@ def test_index_delete_all_button():
     assert "Delete all" in response.text
 
 
-def test_add_event():
+def test_add_item():
     app.test_client().post('/', data={"new-item": "pose", "add-event": "Add"})
     response = app.test_client().get('/')
     assert "pose" in response.text
@@ -204,9 +204,21 @@ def test_returns_time_field():
     assert "Time:" in response.text
 
 
-# def test_shows_created_date_of_item():
-#     app.test_client().post('/', data={"new-item": "Monster", "add-event": "Add"})
-#     response = app.test_client().get('/')
-#     assert 'Monster' in response.text
-#     assert 'Created: 20' in response.text
-    # app.test_client().post('/', data={"delete-all-event": "Delete all"})
+def test_creates_countdown_item():
+    app.test_client().get('/add-countdown')
+    app.test_client().post('/add-countdown', data={"new-countdown": "Monster", "add-countdown-event": "Add"})
+    response = app.test_client().get('/add-countdown')
+    assert 'Monster' in response.text
+
+
+def test_add_countdown_page_delete_all_button():
+    app.test_client().post('/add-countdown', data={"new-countdown": "Celebrate", "add-countdown-event": "Add"})
+    response = app.test_client().get('/add-countdown')
+    assert "Delete all" in response.text
+
+
+def test_add_countdown_delete_all_countdowns():
+    app.test_client().post('/add-countdown', data={"new-countdown": "Pose", "add-countdown-event": "Add"})
+    app.test_client().post('/add-countdown', data={"delete-all-event": "Delete all"})
+    response = app.test_client().get('/add-countdown')
+    assert "Monster" not in response.text

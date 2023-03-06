@@ -20,3 +20,13 @@ def test_event_dict():
     assert new_item_dict["is_complete"] is False
     assert new_item_dict["is_edit"] is False
     assert type(new_item_dict["created_at"]) == str
+
+
+def test_create_countdown_item():
+    new_item_dict = CreateItem("Celebrate").create_new_countdown_item()
+    assert new_item_dict is not None
+    assert type(new_item_dict["id"]) == int
+    assert new_item_dict["name"] == "Celebrate"
+    assert new_item_dict["is_complete"] is False
+    assert new_item_dict["is_edit"] is False
+    assert type(new_item_dict["created_at"]) == str

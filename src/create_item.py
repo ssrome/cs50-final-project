@@ -21,3 +21,13 @@ class CreateItem:
             "created_at": self.created_at
         }
         return item
+
+    def create_new_countdown_item(self):
+        countdown_item = {
+            "id": self.id,
+            "name": self.name,
+            "is_complete": self.is_complete,
+            "is_edit": self.is_edit,
+            "created_at": self.created_at
+        }
+        return countdown_item

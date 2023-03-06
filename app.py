@@ -1,5 +1,3 @@
-import datetime
-
 from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
@@ -33,7 +31,7 @@ def inject_copyright_year():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-
+    stored_item_list = "stored_item_list"
     method = request.method
     form = request.form
     button_event_list = list(form.to_dict().keys())
@@ -48,24 +46,24 @@ def index():
     if method == "POST" and "add-event" in form:
         item_name = form.get("new-item")
         checked_event = CheckCreatedEvent.check_created_event(item_name)
-        previous_events = json.loads(localStorage.getItem("list")) or []
+        previous_events = json.loads(localStorage.getItem(stored_item_list)) or []
         if checked_event is True:
             new_event = CreateItem(item_name).create_new_item()
 
             if previous_events is None or previous_events == []:
-                localStorage.setItem("list", json.dumps([new_event]))
-                item_list = json.loads(localStorage.getItem("list"))
+                localStorage.setItem(stored_item_list, json.dumps([new_event]))
+                item_list = json.loads(localStorage.getItem(stored_item_list))
 
                 return render_template("index.html", item_list=item_list)
             else:
                 previous_events.extend([new_event])
-                localStorage.setItem("list", json.dumps(previous_events))
+                localStorage.setItem(stored_item_list, json.dumps(previous_events))
                 return render_template("index.html", item_list=previous_events)
         return render_template("index.html", item_list=previous_events, error=True)
 
     elif method == "POST" and button_event in form:
         events = Events()
-        item_list = json.loads(localStorage.getItem("list"))
+        item_list = json.loads(localStorage.getItem(stored_item_list))
 
         if button_event == "delete-all-event":
             updated_item_list = events(item_list, method, form)
@@ -73,21 +71,22 @@ def index():
             event_index = int(form.get(button_event))
             updated_item_list = events(item_list, method, form, event_index)
 
-        localStorage.setItem("list", json.dumps(updated_item_list))
+        localStorage.setItem(stored_item_list, json.dumps(updated_item_list))
         return render_template("index.html", item_list=updated_item_list)
     else:
-        item_list = localStorage.getItem("list")
+        item_list = localStorage.getItem(stored_item_list)
         if item_list is None:
-            localStorage.setItem("list", '[]')
+            localStorage.setItem(stored_item_list, '[]')
             return render_template("index.html")
         else:
-            item_list = json.loads(localStorage.getItem("list"))
+            item_list = json.loads(localStorage.getItem(stored_item_list))
             return render_template("index.html", item_list=item_list)
 
 
 @app.route("/completed")
 def completed():
-    items = json.loads(localStorage.getItem("list"))
+    stored_item_list = "stored_item_list"
+    items = json.loads(localStorage.getItem(stored_item_list))
     filtered_completed_items = []
 
     for item in items:
@@ -99,16 +98,68 @@ def completed():
 
 @app.route("/add-countdown", methods=["GET", "POST"])
 def add_countdown():
+    stored_countdown_list = "stored_countdown_list"
     now = DateAndTime.get_utc_time()
+    form = request.form
+    method = request.method
+    button_event_list = list(form.to_dict().keys())
+
+    if len(button_event_list) == 2:
+        button_event = button_event_list.pop()
+    elif len(button_event_list) == 1:
+        button_event = button_event_list[0]
+    else:
+        button_event = None
+
+    # print(f"event: {button_event}")
+    # print(form)
+    # print(method)
+
     # ImmutableMultiDict([('new-countdown', 'test'),
     # ('countdown-date', '2023-03-07'),
     # ('countdown-time', '19:30'),
     # ('add-countdown-event', '')])
-    if request.method == "POST":
-        form = request.form
+    if request.method == "POST" and "add-countdown-event" in form:
 
-        return render_template("add-countdown.html", form=form)
-    return render_template("add-countdown.html", now=now)
+        item_name = form.get("new-countdown")
+        checked_event = CheckCreatedEvent.check_created_event(item_name)
+        previous_events = json.loads(localStorage.getItem(stored_countdown_list)) or []
+        if checked_event is True:
+            new_event = CreateItem(item_name).create_new_countdown_item()
+
+            if previous_events is None or previous_events == []:
+                localStorage.setItem(stored_countdown_list, json.dumps([new_event]))
+                item_list = json.loads(localStorage.getItem(stored_countdown_list))
+
+                return render_template("add-countdown.html", item_list=item_list)
+            else:
+                previous_events.extend([new_event])
+                localStorage.setItem(stored_countdown_list, json.dumps(previous_events))
+                return render_template("add-countdown.html", item_list=previous_events)
+
+    elif method == "POST" and button_event in form:
+
+        events = Events()
+        item_list = json.loads(localStorage.getItem(stored_countdown_list))
+
+        if button_event == "delete-all-event":
+            updated_item_list = events(item_list, method, form)
+        else:
+            event_index = int(form.get(button_event))
+            updated_item_list = events(item_list, method, form, event_index)
+
+        localStorage.setItem(stored_countdown_list, json.dumps(updated_item_list))
+        return render_template("add-countdown.html", item_list=updated_item_list, error=True, now=now)
+
+    else:
+        print(button_event)
+        item_list = localStorage.getItem(stored_countdown_list)
+        if item_list is None:
+            localStorage.setItem(stored_countdown_list, '[]')
+            return render_template("add-countdown.html", now=now)
+        else:
+            item_list = json.loads(localStorage.getItem(stored_countdown_list))
+            return render_template("add-countdown.html", item_list=item_list, now=now)
 
 
 @app.route("/error")
