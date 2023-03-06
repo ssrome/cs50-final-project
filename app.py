@@ -7,7 +7,7 @@ import os
 from src.check_created_event import CheckCreatedEvent
 from src.date_and_time import DateAndTime
 from src.events import Events
-from src.event_item import EventItem
+from src.create_item import CreateItem
 
 
 localStorage = localStoragePy("cs50-todo", "json")
@@ -50,7 +50,7 @@ def index():
         checked_event = CheckCreatedEvent.check_created_event(item_name)
         previous_events = json.loads(localStorage.getItem("list")) or []
         if checked_event is True:
-            new_event = EventItem(item_name).create_new_event()
+            new_event = CreateItem(item_name).create_new_item()
 
             if previous_events is None or previous_events == []:
                 localStorage.setItem("list", json.dumps([new_event]))
@@ -99,8 +99,11 @@ def completed():
 
 @app.route("/add-countdown", methods=["GET", "POST"])
 def add_countdown():
-    now = datetime.datetime.now()
-    # ImmutableMultiDict([('new-countdown', 'test'), ('countdown-date', '2023-03-07'), ('countdown-time', '19:30'), ('add-countdown-event', '')])
+    now = DateAndTime.get_utc_time()
+    # ImmutableMultiDict([('new-countdown', 'test'),
+    # ('countdown-date', '2023-03-07'),
+    # ('countdown-time', '19:30'),
+    # ('add-countdown-event', '')])
     if request.method == "POST":
         form = request.form
 

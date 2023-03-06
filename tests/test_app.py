@@ -159,7 +159,7 @@ def test_edited_item_can_be_saved():
     response = app.test_client().post('/', data={"edit-item": "Monster", "save-event": "0"})
     assert 'Monster' in response.text
     assert 'Celebrate' not in response.text
-    # app.test_client().post('/', data={"delete-all-event": "Delete all"})
+    app.test_client().post('/', data={"delete-all-event": "Delete all"})
 
 
 def test_returns_type_to_add_subtitle():
@@ -202,3 +202,11 @@ def test_returns_time_field():
     response = app.test_client().get('/add-countdown')
     assert 'input type="time"' in response.text
     assert "Time:" in response.text
+
+
+# def test_shows_created_date_of_item():
+#     app.test_client().post('/', data={"new-item": "Monster", "add-event": "Add"})
+#     response = app.test_client().get('/')
+#     assert 'Monster' in response.text
+#     assert 'Created: 20' in response.text
+    # app.test_client().post('/', data={"delete-all-event": "Delete all"})
