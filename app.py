@@ -1,10 +1,12 @@
+import datetime
+
 from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
 import os
 from src.check_created_event import CheckCreatedEvent
+from src.date_and_time import DateAndTime
 from src.events import Events
-from src.get_current_year import GetCurrentYear
 from src.event_item import EventItem
 
 
@@ -25,7 +27,7 @@ def after_request(response):
 
 @app.context_processor
 def inject_copyright_year():
-    current_year = GetCurrentYear().__call__()
+    current_year = DateAndTime.get_current_year()
     return dict(year=f'2022 - {current_year}')
 
 
@@ -95,9 +97,15 @@ def completed():
     return render_template("completed.html", item_list=filtered_completed_items)
 
 
-@app.route("/add-countdown")
+@app.route("/add-countdown", methods=["GET", "POST"])
 def add_countdown():
-    return render_template("add-countdown.html")
+    now = datetime.datetime.now()
+    # ImmutableMultiDict([('new-countdown', 'test'), ('countdown-date', '2023-03-07'), ('countdown-time', '19:30'), ('add-countdown-event', '')])
+    if request.method == "POST":
+        form = request.form
+
+        return render_template("add-countdown.html", form=form)
+    return render_template("add-countdown.html", now=now)
 
 
 @app.route("/error")

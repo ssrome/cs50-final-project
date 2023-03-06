@@ -7,9 +7,12 @@ class DateAndTime:
 
     @staticmethod
     def get_date_time_now():
-        return datetime.date().today()
+        return datetime.date.today()
 
     @staticmethod
     def get_current_year():
-        current_year = datetime.date.today().strftime("%Y")
-        return current_year
+        return datetime.date.today().strftime("%Y")
+
+    @staticmethod
+    def get_utc_time():
+        return datetime.datetime.utcnow()
