@@ -111,10 +111,6 @@ def add_countdown():
     else:
         button_event = None
 
-    # print(f"event: {button_event}")
-    # print(form)
-    # print(method)
-
     # ImmutableMultiDict([('new-countdown', 'test'),
     # ('countdown-date', '2023-03-07'),
     # ('countdown-time', '19:30'),
@@ -152,7 +148,6 @@ def add_countdown():
         return render_template("add-countdown.html", item_list=updated_item_list, error=True, now=now)
 
     else:
-        print(button_event)
         item_list = localStorage.getItem(stored_countdown_list)
         if item_list is None:
             localStorage.setItem(stored_countdown_list, '[]')

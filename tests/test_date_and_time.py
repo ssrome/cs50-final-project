@@ -34,4 +34,10 @@ def test_return_year(date_and_time):
 
 @freeze_time("2012-01-14 03:21:34", tz_offset=-4)
 def test_returns_utc_time(date_and_time):
-    assert date_and_time.get_utc_time() == datetime.datetime(2012, 1, 14, 3, 21, 34)
+    response = date_and_time.get_utc_time()
+    assert response == "2012-01-13 23:21:34"
+
+
+def test_converts_time_to_utc(date_and_time):
+    response = date_and_time.convert_to_utc_time("2024-01-14 10:00-04:00")
+    assert response == "2024-01-14 14:00:00"

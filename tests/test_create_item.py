@@ -30,3 +30,9 @@ def test_create_countdown_item():
     assert new_item_dict["is_complete"] is False
     assert new_item_dict["is_edit"] is False
     assert type(new_item_dict["created_at"]) == str
+
+
+# test it takes date and time and returns in dict
+# test it take date and defaults time to 0:0
+# date is required. time isn't
+#def test_returns_
