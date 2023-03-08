@@ -1,3 +1,4 @@
+import time
 from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
@@ -99,7 +100,8 @@ def completed():
 @app.route("/add-countdown", methods=["GET", "POST"])
 def add_countdown():
     stored_countdown_list = "stored_countdown_list"
-    now = DateAndTime.get_utc_time()
+    user_local_time = time.localtime()
+    now = user_local_time
     form = request.form
     method = request.method
     button_event_list = list(form.to_dict().keys())
@@ -115,6 +117,13 @@ def add_countdown():
     # ('countdown-date', '2023-03-07'),
     # ('countdown-time', '19:30'),
     # ('add-countdown-event', '')])
+
+    countdown_date = form.get('countdown-date')
+    countdown_time = form.get('countdown-time')
+    user_timezone = time.strftime("%z", user_local_time)
+
+    countdown_timestamp = f'{countdown_date} {countdown_time}{user_timezone}'
+
     if request.method == "POST" and "add-countdown-event" in form:
 
         item_name = form.get("new-countdown")
@@ -131,7 +140,9 @@ def add_countdown():
             else:
                 previous_events.extend([new_event])
                 localStorage.setItem(stored_countdown_list, json.dumps(previous_events))
-                return render_template("add-countdown.html", item_list=previous_events)
+                return render_template("add-countdown.html",
+                                       item_list=previous_events,
+                                       countdown_timestamp=countdown_timestamp)
 
     elif method == "POST" and button_event in form:
 
@@ -145,7 +156,10 @@ def add_countdown():
             updated_item_list = events(item_list, method, form, event_index)
 
         localStorage.setItem(stored_countdown_list, json.dumps(updated_item_list))
-        return render_template("add-countdown.html", item_list=updated_item_list, error=True, now=now)
+        return render_template("add-countdown.html", item_list=updated_item_list,
+                               error=True,
+                               now=now,
+                               countdown_timestamp=countdown_timestamp)
 
     else:
         item_list = localStorage.getItem(stored_countdown_list)
