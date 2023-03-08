@@ -1,4 +1,11 @@
+from unittest.mock import MagicMock
+import pytest
 from app import app
+
+
+@pytest.fixture
+def mock_time():
+    return MagicMock()
 
 
 def test_index_heading():
@@ -204,13 +211,6 @@ def test_returns_time_field():
     assert "Time:" in response.text
 
 
-def test_creates_countdown_item():
-    app.test_client().get('/add-countdown')
-    app.test_client().post('/add-countdown', data={"new-countdown": "Monster", "add-countdown-event": "Add"})
-    response = app.test_client().get('/add-countdown')
-    assert 'Monster' in response.text
-
-
 def test_add_countdown_page_delete_all_button():
     app.test_client().post('/add-countdown', data={"new-countdown": "Celebrate", "add-countdown-event": "Add"})
     response = app.test_client().get('/add-countdown')
@@ -222,3 +222,40 @@ def test_add_countdown_delete_all_countdowns():
     app.test_client().post('/add-countdown', data={"delete-all-event": "Delete all"})
     response = app.test_client().get('/add-countdown')
     assert "Monster" not in response.text
+
+def test_creates_countdown_item(mock_time):
+    mock_time.return_value = "tm_year=2023, " \
+                             "tm_mon=3, " \
+                             "tm_mday=8, " \
+                             "tm_hour=17, " \
+                             "tm_min=27, " \
+                             "tm_sec=45, " \
+                             "tm_isdst=0"
+    app.test_client().get('/add-countdown')
+    app.test_client().post('/add-countdown', data={"new-countdown": "Monster",
+                                                   "add-countdown-event": "Add",
+                                                   'countdown-date': '2023-03-07',
+                                                   'countdown-time': '19:30'
+                                                   })
+    response = app.test_client().get('/add-countdown')
+    assert 'Monster' in response.text
+    assert '2023-03-07 19:30' in response.text
+
+
+# def test_shows_countdown_local_timestamp(mock_time):
+#     mock_time.return_value = "tm_year=2023, " \
+#                              "tm_mon=3, " \
+#                              "tm_mday=8, " \
+#                              "tm_hour=17, " \
+#                              "tm_min=27, " \
+#                              "tm_sec=45, " \
+#                              "tm_isdst=1"
+#     app.test_client().get('/add-countdown')
+#     app.test_client().post('/add-countdown', data={"new-countdown": "Monster",
+#                                                    "add-countdown-event": "Add",
+#                                                    'countdown-date': '2023-03-07',
+#                                                    'countdown-time': '20:30'
+#                                                    })
+#     response = app.test_client().get('/add-countdown')
+#     assert 'Monster' in response.text
+#     assert '2023-03-07 21:30' in response.text

@@ -22,12 +22,13 @@ class CreateItem:
         }
         return item
 
-    def create_new_countdown_item(self):
+    def create_new_countdown_item(self, countdown_date):
         countdown_item = {
             "id": self.id,
             "name": self.name,
             "is_complete": self.is_complete,
             "is_edit": self.is_edit,
-            "created_at": self.created_at
+            "created_at": self.created_at,
+            "countdown_timestamp": DateAndTime.convert_to_utc_time(countdown_date)
         }
         return countdown_item

@@ -1,4 +1,5 @@
 import time
+import datetime
 from flask import Flask, render_template, request
 import json
 from localStoragePy import localStoragePy
@@ -120,9 +121,12 @@ def add_countdown():
 
     countdown_date = form.get('countdown-date')
     countdown_time = form.get('countdown-time')
-    user_timezone = time.strftime("%z", user_local_time)
+    user_timezone_str = time.strftime("%z", user_local_time)
+    # time.strftime("%Y-%m-%d %H:%M:%S", user_local_time
+    user_timezone = time.strptime(user_timezone_str, "%z")
 
     countdown_timestamp = f'{countdown_date} {countdown_time}{user_timezone}'
+    # 2023-03-10 18:01+0000
 
     if request.method == "POST" and "add-countdown-event" in form:
 
@@ -130,7 +134,7 @@ def add_countdown():
         checked_event = CheckCreatedEvent.check_created_event(item_name)
         previous_events = json.loads(localStorage.getItem(stored_countdown_list)) or []
         if checked_event is True:
-            new_event = CreateItem(item_name).create_new_countdown_item()
+            new_event = CreateItem(item_name).create_new_countdown_item("2023-03-07 19:30+00:00")
 
             if previous_events is None or previous_events == []:
                 localStorage.setItem(stored_countdown_list, json.dumps([new_event]))
