@@ -29,6 +29,6 @@ class CreateItem:
             "is_complete": self.is_complete,
             "is_edit": self.is_edit,
             "created_at": self.created_at,
-            "countdown_timestamp": DateAndTime.convert_to_utc_time(countdown_date)
+            "countdown_timestamp": countdown_date
         }
         return countdown_item
