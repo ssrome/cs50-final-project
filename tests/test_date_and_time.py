@@ -39,5 +39,9 @@ def test_returns_utc_time(date_and_time):
 
 
 def test_converts_time_to_utc(date_and_time):
-    response = date_and_time.convert_to_utc_time("2024-01-14 10:00-04:00")
-    assert response == "2024-01-14 14:00:00"
+    local_now = datetime.datetime(2024, 1, 14, 10, 0, 0)
+    utc_now = datetime.datetime(2024, 1, 14, 8, 0, 0)
+    countdown_time = datetime.datetime.strptime("2024-01-14 14:00:00", "%Y-%m-%d %H:%M:%S")
+    response = date_and_time.convert_to_utc_time(local_now, utc_now, countdown_time)
+    print(response)
+    assert response == "2024-01-14 12:00:00"

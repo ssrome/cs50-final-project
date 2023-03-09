@@ -19,6 +19,13 @@ class DateAndTime:
         return utc_time_now.strftime("%Y-%m-%d %H:%M:%S")
 
     @staticmethod
-    def convert_to_utc_time(timestamp):
-        date_in_numbers = datetime.fromisoformat(timestamp)
-        return datetime.astimezone(date_in_numbers, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+    def convert_to_utc_time(local_now, utc_now, countdown_time):
+        if local_now > utc_now:
+            utc_offset = local_now - utc_now
+            print(utc_offset)
+            converted_time = countdown_time - utc_offset
+            print(converted_time)
+            return datetime.astimezone(converted_time, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
+
+        # date_in_numbers = datetime.fromisoformat(timestamp)
+        # return datetime.astimezone(date_in_numbers, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
